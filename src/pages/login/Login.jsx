@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react"
 import { useRouter } from "next/router"
 import { useDispatch } from "react-redux"
 
-import { logIn } from "@/redux/actions/authenticationActions"
+import { logIn, logOut } from "@/redux/actions/authenticationActions"
 
 const Login = () => {
   const dispatch = useDispatch()
@@ -29,8 +29,8 @@ const Login = () => {
     performLogin()
   }, [code])
 
-  const handleTestCookieButton = () => {
-    get("/api/test-cookie")
+  const handleLogOutButton = () => {
+    dispatch(logOut)
   }
 
   return (
@@ -39,7 +39,7 @@ const Login = () => {
       <pre>
         <code>{JSON.stringify(responseData, null, 2)}</code>
       </pre>
-      <button onClick={handleTestCookieButton}>Test Cookie</button>
+      <button onClick={handleLogOutButton}>Log Out</button>
     </div>
   )
 }

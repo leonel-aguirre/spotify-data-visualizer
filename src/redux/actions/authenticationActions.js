@@ -8,7 +8,7 @@ export const fetchAuthorizationURL = () => async () => {
   return url
 }
 
-export const logIn = (authorizationCode) => async (dispatch) => {
+export const logIn = (authorizationCode) => async () => {
   const { data } = await post("/login", {
     code: authorizationCode,
   })
@@ -16,5 +16,6 @@ export const logIn = (authorizationCode) => async (dispatch) => {
   return data
 }
 
-// TODO: Implement function, BE must remove http-only cookie token.
-export const logOut = () => {}
+export const logOut = () => () => {
+  post("/logout")
+}
