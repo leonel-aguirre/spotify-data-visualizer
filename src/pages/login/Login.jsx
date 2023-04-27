@@ -1,38 +1,43 @@
 import React, { useEffect, useState } from "react"
 import { useRouter } from "next/router"
 
+import { get, post } from "@/axios/api"
+
 const Login = () => {
-  const [response, setResponse] = useState({})
+  const [responseData, setResponseData] = useState({})
 
   const {
     query: { code },
   } = useRouter()
 
+  // Sends authorization code received from spotify in order to receive the access token.
   useEffect(() => {
-    if (code) {
-      fetch("/api/token", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          code,
-        }),
-      })
-        .then((response) => response.json())
-        .then((data) => setResponse(data))
+    const performLogin = async () => {
+      if (code) {
+        try {
+          const { data } = await post("/login", {
+            code,
+          })
+
+          setResponseData(data)
+        } catch ({ response }) {
+          setResponseData(response.data)
+        }
+      }
     }
+
+    performLogin()
   }, [code])
 
   const handleTestCookieButton = () => {
-    fetch("/api/test-cookie")
+    get("/api/test-cookie")
   }
 
   return (
     <div className="login">
       <h1>Login</h1>
       <pre>
-        <code>{JSON.stringify(response, null, 2)}</code>
+        <code>{JSON.stringify(responseData, null, 2)}</code>
       </pre>
       <button onClick={handleTestCookieButton}>Test Cookie</button>
     </div>
