@@ -1,6 +1,6 @@
-import { jsonToQueryParams } from "@/utils";
+import { jsonToQueryParams } from "@/utils"
 
-const clientID = process.env.NEXT_PUBLIC_CLIENT_ID;
+const clientID = process.env.NEXT_PUBLIC_CLIENT_ID
 
 const handler = (_req, res) => {
   const responseURL =
@@ -10,9 +10,9 @@ const handler = (_req, res) => {
       client_id: clientID,
       scope: "user-read-private user-read-email user-top-read",
       redirect_uri: "http://localhost:3000/login",
-    });
+    })
 
-  res.status(200).json({ url: responseURL });
-};
+  res.status(200).json({ url: responseURL })
+}
 
-export default handler;
+export default handler

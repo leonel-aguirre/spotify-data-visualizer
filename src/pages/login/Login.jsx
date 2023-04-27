@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from "react";
-import { useRouter } from "next/router";
+import React, { useEffect, useState } from "react"
+import { useRouter } from "next/router"
 
 const Login = () => {
-  const [response, setResponse] = useState({});
+  const [response, setResponse] = useState({})
 
   const {
     query: { code },
-  } = useRouter();
+  } = useRouter()
 
   useEffect(() => {
     if (code) {
@@ -20,9 +20,13 @@ const Login = () => {
         }),
       })
         .then((response) => response.json())
-        .then((data) => setResponse(data));
+        .then((data) => setResponse(data))
     }
-  }, [code]);
+  }, [code])
+
+  const handleTestCookieButton = () => {
+    fetch("/api/test-cookie")
+  }
 
   return (
     <div className="login">
@@ -30,8 +34,9 @@ const Login = () => {
       <pre>
         <code>{JSON.stringify(response, null, 2)}</code>
       </pre>
+      <button onClick={handleTestCookieButton}>Test Cookie</button>
     </div>
-  );
-};
+  )
+}
 
-export default Login;
+export default Login
