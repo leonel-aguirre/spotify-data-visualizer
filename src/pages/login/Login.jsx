@@ -30,7 +30,7 @@ const Login = () => {
   }, [code])
 
   const handleLogOutButton = () => {
-    dispatch(logOut)
+    dispatch(logOut())
   }
 
   return (
