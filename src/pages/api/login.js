@@ -1,18 +1,57 @@
-import { jsonToQueryParams } from "@/utils";
+import cookie from "cookie"
 
-const clientID = process.env.NEXT_PUBLIC_CLIENT_ID;
+import { post } from "@/axios/api"
+import { jsonToQueryParams } from "@/utils"
 
-const handler = (_req, res) => {
-  const responseURL =
-    "https://accounts.spotify.com/authorize?" +
-    jsonToQueryParams({
-      response_type: "code",
-      client_id: clientID,
-      scope: "user-read-private user-read-email user-top-read",
-      redirect_uri: "http://localhost:3000/login",
-    });
+const clientID = process.env.NEXT_PUBLIC_CLIENT_ID
+const clientSecret = process.env.NEXT_PUBLIC_CLIENT_SECRET
 
-  res.status(200).json({ url: responseURL });
-};
+const handler = async (req, res) => {
+  const { code } = req?.body
 
-export default handler;
+  const body = jsonToQueryParams({
+    code,
+    grant_type: "authorization_code",
+    redirect_uri: "http://localhost:3000/login",
+  })
+
+  const headers = {
+    "Content-Type": "application/x-www-form-urlencoded",
+    Authorization:
+      "Basic " +
+      new Buffer.from(clientID + ":" + clientSecret).toString("base64"),
+  }
+
+  try {
+    const { data } = await post(
+      "https://accounts.spotify.com/api/token",
+      body,
+      headers,
+      true
+    )
+
+    const { access_token, expires_in, refresh_token } = data
+
+    // TODO: For testing purposes, remove when unneeded.
+    console.log({ access_token, expires_in, refresh_token })
+
+    res.setHeader(
+      "Set-Cookie",
+      cookie.serialize("token", access_token, {
+        httpOnly: true,
+        secure: false, // FIXME: Address for deployment.
+        maxAge: 60 * 60,
+        sameSite: "lax", // FIXME: Address for deployment.
+      })
+    )
+
+    res.status(200).json({ success: "true" })
+  } catch (error) {
+    res.status(403).json({
+      success: "false",
+      message: "Authorization not granted, try again.",
+    })
+  }
+}
+
+export default handler

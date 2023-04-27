@@ -1,37 +1,47 @@
-import React, { useEffect, useState } from "react";
-import { useRouter } from "next/router";
+import React, { useEffect, useState } from "react"
+import { useRouter } from "next/router"
+import { useDispatch } from "react-redux"
+
+import { logIn, logOut } from "@/redux/actions/authenticationActions"
 
 const Login = () => {
-  const [response, setResponse] = useState({});
+  const dispatch = useDispatch()
+  const [responseData, setResponseData] = useState({})
 
   const {
     query: { code },
-  } = useRouter();
+  } = useRouter()
 
+  // Sends authorization code received from spotify in order to receive the access token.
   useEffect(() => {
-    if (code) {
-      fetch("/api/token", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          code,
-        }),
-      })
-        .then((response) => response.json())
-        .then((data) => setResponse(data));
+    const performLogin = async () => {
+      if (code) {
+        try {
+          const data = await dispatch(logIn(code))
+
+          setResponseData(data)
+        } catch ({ response }) {
+          setResponseData(response.data)
+        }
+      }
     }
-  }, [code]);
+
+    performLogin()
+  }, [code])
+
+  const handleLogOutButton = () => {
+    dispatch(logOut())
+  }
 
   return (
     <div className="login">
       <h1>Login</h1>
       <pre>
-        <code>{JSON.stringify(response, null, 2)}</code>
+        <code>{JSON.stringify(responseData, null, 2)}</code>
       </pre>
+      <button onClick={handleLogOutButton}>Log Out</button>
     </div>
-  );
-};
+  )
+}
 
-export default Login;
+export default Login
