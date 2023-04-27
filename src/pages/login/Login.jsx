@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react"
 import { useRouter } from "next/router"
+import { useDispatch } from "react-redux"
 
-import { get, post } from "@/axios/api"
+import { logIn } from "@/redux/actions/authenticationActions"
 
 const Login = () => {
+  const dispatch = useDispatch()
   const [responseData, setResponseData] = useState({})
 
   const {
@@ -15,9 +17,7 @@ const Login = () => {
     const performLogin = async () => {
       if (code) {
         try {
-          const { data } = await post("/login", {
-            code,
-          })
+          const data = await dispatch(logIn(code))
 
           setResponseData(data)
         } catch ({ response }) {

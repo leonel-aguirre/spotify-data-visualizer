@@ -1,15 +1,15 @@
 import React from "react"
 import { useRouter } from "next/router"
+import { useDispatch } from "react-redux"
 
-import { get } from "@/axios/api"
+import { fetchAuthorizationURL } from "@/redux/actions/authenticationActions"
 
 const Home = () => {
+  const dispatch = useDispatch()
   const { push } = useRouter()
 
   const loginButtonHandler = async () => {
-    const {
-      data: { url },
-    } = await get("/spotify-auth-url")
+    const url = await dispatch(fetchAuthorizationURL())
 
     if (url) {
       push(url)
