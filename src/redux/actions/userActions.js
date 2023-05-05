@@ -17,3 +17,18 @@ export const fetchUserData = () => async (dispatch) => {
     // TODO: Handle error.
   }
 }
+
+export const fetchUserLongTermTopArtists = () => async (dispatch) => {
+  try {
+    const {
+      data: { topArtists },
+    } = await get("/top", {
+      type: "artists",
+      range: "long_term",
+    })
+
+    // TODO: Store with redux.
+  } catch (error) {
+    // TODO: Handle error.
+  }
+}

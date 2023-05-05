@@ -1,7 +1,10 @@
 import React, { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 
-import { fetchUserData } from "@/redux/actions/userActions"
+import {
+  fetchUserData,
+  fetchUserLongTermTopArtists,
+} from "@/redux/actions/userActions"
 import { selectImageURL, selectUserName } from "@/redux/reducers/userReducer"
 
 const Dashboard = () => {
@@ -11,6 +14,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     dispatch(fetchUserData())
+    dispatch(fetchUserLongTermTopArtists())
   }, [])
 
   return (
