@@ -20,7 +20,10 @@ const Login = () => {
         try {
           const data = await dispatch(logIn(code))
 
-          push("/dashboard")
+          if (data?.success === "true") {
+            push("/dashboard")
+          }
+          setResponseData(data)
         } catch ({ response }) {
           setResponseData(response.data)
         }

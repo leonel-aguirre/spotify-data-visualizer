@@ -10,6 +10,7 @@ const handler = async (req, res) => {
   try {
     const { data: user } = await get(
       "https://api.spotify.com/v1/me",
+      null,
       headers,
       true
     )

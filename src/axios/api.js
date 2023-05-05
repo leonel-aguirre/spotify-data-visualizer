@@ -16,15 +16,20 @@ const sendRequest = (
   const config = {
     method,
     url,
-    headers: { ...headers },
-    data: body,
+    headers,
+  }
+
+  if (method === "GET") {
+    config.params = body
+  } else {
+    config.data = body
   }
 
   return axiosInstance(config)
 }
 
-export const get = (endPoint, headers = {}, isURLExternal) => {
-  return sendRequest("GET", endPoint, null, headers, isURLExternal)
+export const get = (endPoint, body, headers = {}, isURLExternal) => {
+  return sendRequest("GET", endPoint, body, headers, isURLExternal)
 }
 
 export const post = (endPoint, body, headers = {}, isURLExternal) => {
