@@ -14,6 +14,7 @@ const handler = (_req, res) => {
       client_id: clientID,
       scope: SPOTIFY_SCOPE_LIST,
       redirect_uri: "http://localhost:3000/login",
+      show_dialog: true,
     })
 
   res.status(200).json({ url: responseURL })
