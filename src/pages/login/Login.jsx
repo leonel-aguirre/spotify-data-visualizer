@@ -6,7 +6,7 @@ import { logIn, logOut } from "@/redux/actions/authenticationActions"
 
 const Login = () => {
   const dispatch = useDispatch()
-  const { push } = useRouter()
+  const { replace } = useRouter()
   const [responseData, setResponseData] = useState({})
 
   const {
@@ -21,7 +21,7 @@ const Login = () => {
           const data = await dispatch(logIn(code))
 
           if (data?.success === "true") {
-            push("/dashboard")
+            replace("/dashboard")
           }
           setResponseData(data)
         } catch ({ response }) {

@@ -1,0 +1,38 @@
+$desktop-max: 1440;
+$tablet-landscape-max: 1024;
+$tablet-portrait-max: 768;
+$mobile-max: 600;
+
+$desktop-min: $tablet-landscape-max + 1;
+$tablet-landscape-min: $tablet-portrait-max + 1;
+$tablet-portrait-min: $mobile-max + 1;
+$mobile-min: 0;
+
+$breakpoints: (
+  max: $desktop-max * 1px,
+  large: $tablet-landscape-max * 1px,
+  medium: $tablet-portrait-max * 1px,
+  small: $mobile-max * 1px,
+);
+
+@function bp($bp) {
+  @return map-get($breakpoints, $bp);
+}
+
+@mixin breakpoint($min: 0, $max: 9999px) {
+  @media (min-width: #{$min}) and (max-width: #{$max}) {
+    @content;
+  }
+}
+
+@mixin breakpoint-min($min) {
+  @include breakpoint(($min + 1)) {
+    @content;
+  }
+}
+
+@mixin breakpoint-max($max) {
+  @include breakpoint(0, $max) {
+    @content;
+  }
+}

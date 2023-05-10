@@ -1,0 +1,16 @@
+@use "@/sass/index" as *;
+
+$base-text-color: $color-ghost-white;
+$base-background-color: $color-raisin-black;
+
+body {
+  background-color: $base-background-color;
+}
+
+* {
+  @extend %font-sans;
+
+  margin: 0;
+  box-sizing: border-box;
+  color: $base-text-color;
+}
