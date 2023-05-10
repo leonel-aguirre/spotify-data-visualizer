@@ -4,6 +4,7 @@ import { Provider } from "react-redux"
 import { configureStore } from "@reduxjs/toolkit"
 
 import reducer from "@/redux/reducer"
+import AfterLoginLayout from "@/layouts/AfterLoginLayout"
 
 const store = configureStore({
   reducer,
@@ -12,7 +13,9 @@ const store = configureStore({
 export default function App({ Component, pageProps }) {
   return (
     <Provider store={store}>
-      <Component {...pageProps} />
+      <AfterLoginLayout>
+        <Component {...pageProps} />
+      </AfterLoginLayout>
     </Provider>
   )
 }
