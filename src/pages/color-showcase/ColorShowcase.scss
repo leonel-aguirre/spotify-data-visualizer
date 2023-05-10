@@ -1,0 +1,53 @@
+@use "@/sass/index" as *;
+
+@mixin swatch($color) {
+  background-color: $color;
+
+  &:after {
+    content: "#{$color}";
+  }
+}
+
+.color-showcase {
+  $colors: (
+    raisin-black: $color-raisin-black,
+    ghost-white: $color-ghost-white,
+    folly-red: $color-folly-red,
+    azure-blue: $color-azure-blue,
+    spring-green: $color-spring-green,
+  );
+
+  &__swatch-wrapper {
+    @each $color-name, $color in $colors {
+      &.is-#{"" + $color-name} {
+        .is-lighten-1 {
+          @include swatch(lighten-1($color));
+        }
+
+        .is-lighten-2 {
+          @include swatch(lighten-2($color));
+        }
+
+        .is-lighten-3 {
+          @include swatch(lighten-3($color));
+        }
+
+        .is-darken-1 {
+          @include swatch(darken-1($color));
+        }
+
+        .is-darken-2 {
+          @include swatch(darken-2($color));
+        }
+
+        .is-darken-3 {
+          @include swatch(darken-3($color));
+        }
+
+        .is-natural {
+          @include swatch($color);
+        }
+      }
+    }
+  }
+}
