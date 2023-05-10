@@ -3,6 +3,7 @@ import "./Home.scss"
 import React from "react"
 import { useRouter } from "next/router"
 import { useDispatch } from "react-redux"
+import Head from "next/head"
 
 import { fetchAuthorizationURL } from "@/redux/actions/authenticationActions"
 import Button from "@/components/Button/Button"
@@ -21,6 +22,10 @@ const Home = () => {
 
   return (
     <div className="home">
+      <Head>
+        <title>Home</title>
+      </Head>
+
       <div className="home__content-wrapper">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src="/static/images/logo.svg" className="home__logo" alt="Logo" />
