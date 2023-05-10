@@ -1,3 +1,5 @@
+import "./App.scss"
+
 import { Provider } from "react-redux"
 import { configureStore } from "@reduxjs/toolkit"
 
