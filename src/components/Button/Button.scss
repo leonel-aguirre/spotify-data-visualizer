@@ -1,0 +1,116 @@
+@use "@/sass/index" as *;
+
+$glow-button-background-color: $color-raisin-black;
+
+.button {
+  $glow-button-text-color: $color-ghost-white;
+  $button-min-width: 280px;
+
+  padding: $space-2 $space-2;
+  color: $glow-button-text-color;
+  font-weight: $font-weight-bold;
+  transition: box-shadow 0.5s, color 0.5s;
+  border-radius: 15px;
+  border: 2px solid transparent;
+  min-width: $button-min-width;
+
+  &:hover {
+    cursor: pointer;
+    color: $color-raisin-black;
+  }
+
+  &.is-small {
+    @extend %body-sans;
+
+    padding: $space-1 $space-3;
+    min-width: fit-content;
+  }
+
+  &.is-large {
+    @extend %h4-sans;
+  }
+
+  &.is-danger {
+    $hover-background-color: $color-folly-red;
+    $red-gradient: monochrome-gradient($color-folly-red, 45deg);
+
+    background: linear-gradient(
+          $glow-button-background-color,
+          $glow-button-background-color
+        )
+        padding-box,
+      $red-gradient border-box;
+
+    &:hover {
+      box-shadow: 0 0 20px $color-folly-red;
+      background: $red-gradient padding-box, $red-gradient border-box;
+    }
+
+    &:active {
+      box-shadow: 0 0 40px $color-folly-red;
+    }
+  }
+
+  &.is-default {
+    $hover-background-color: $color-azure-blue;
+    $blue-gradient: monochrome-gradient($color-azure-blue, 45deg);
+
+    background: linear-gradient(
+          $glow-button-background-color,
+          $glow-button-background-color
+        )
+        padding-box,
+      $blue-gradient border-box;
+
+    &:hover {
+      box-shadow: 0 0 20px $color-azure-blue;
+      background: $blue-gradient padding-box, $blue-gradient border-box;
+    }
+
+    &:active {
+      box-shadow: 0 0 40px $color-azure-blue;
+    }
+  }
+
+  &.is-success {
+    $hover-background-color: $color-spring-green;
+    $green-gradient: monochrome-gradient($color-spring-green, 45deg);
+
+    background: linear-gradient(
+          $glow-button-background-color,
+          $glow-button-background-color
+        )
+        padding-box,
+      $green-gradient border-box;
+
+    &:hover {
+      box-shadow: 0 0 20px $color-spring-green;
+      background: $green-gradient padding-box, $green-gradient border-box;
+    }
+
+    &:active {
+      box-shadow: 0 0 40px $color-spring-green;
+    }
+  }
+
+  // &.is-warning {
+  //   $hover-background-color: $color-yellow;
+  //   $yellow-gradient: monochrome-gradient($color-yellow, 45deg);
+
+  //   background: linear-gradient(
+  //         $glow-button-background-color,
+  //         $glow-button-background-color
+  //       )
+  //       padding-box,
+  //     $yellow-gradient border-box;
+
+  //   &:hover {
+  //     box-shadow: 0 0 20px $color-yellow;
+  //     background: $yellow-gradient padding-box, $yellow-gradient border-box;
+  //   }
+
+  //   &:active {
+  //     box-shadow: 0 0 40px $color-yellow;
+  //   }
+  // }
+}

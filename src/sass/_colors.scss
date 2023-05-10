@@ -1,0 +1,46 @@
+$color-raisin-black: #16161d;
+$color-ghost-white: #f8f8ff;
+
+$color-folly-red: #fc2453;
+$color-azure-blue: #3185fc;
+$color-spring-green: #40f99b;
+
+@function monochrome-gradient($color: $color-black, $degrees: 90deg) {
+  @return linear-gradient($degrees, $color 0%, lighten-2($color) 100%);
+}
+
+$color-adjust-1: 20%;
+$color-adjust-2: 40%;
+$color-adjust-3: 60%;
+
+@function lighten-1($color) {
+  @return scale-color($color, $lightness: $color-adjust-1);
+}
+
+@function lighten-2($color) {
+  @return scale-color($color, $lightness: $color-adjust-2);
+}
+
+@function lighten-3($color) {
+  @return scale-color($color, $lightness: $color-adjust-3);
+}
+
+@function lighten-4($color) {
+  @return scale-color($color, $lightness: $color-adjust-4);
+}
+
+@function darken-1($color) {
+  @return scale-color($color, $lightness: $color-adjust-1 * -1);
+}
+
+@function darken-2($color) {
+  @return scale-color($color, $lightness: $color-adjust-2 * -1);
+}
+
+@function darken-3($color) {
+  @return scale-color($color, $lightness: $color-adjust-3 * -1);
+}
+
+@function darken-4($color) {
+  @return scale-color($color, $lightness: $color-adjust-4 * -1);
+}

@@ -1,0 +1,74 @@
+@use "@/sass/index" as *;
+
+.home {
+  background: linear-gradient(
+    to bottom right,
+    $color-raisin-black,
+    darken-3($color-azure-blue)
+  );
+  height: 100vh;
+  display: flex;
+
+  &__content-wrapper {
+    @extend %container;
+
+    margin-left: $space-4;
+    margin-right: $space-4;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-areas:
+      "logo logo logo logo"
+      "texts texts texts texts"
+      "cta cta cta cta";
+
+    @include breakpoint-min(bp(small)) {
+      margin: auto;
+      grid-template-columns: repeat(12, 1fr);
+      grid-template-areas:
+        ". . . logo logo logo logo logo logo . . ."
+        ". . texts texts texts texts texts texts texts texts . ."
+        ". . . . cta cta cta cta . . . .";
+    }
+  }
+
+  &__logo {
+    grid-area: logo;
+    width: 100%;
+    margin-bottom: $space-4;
+
+    @include breakpoint-min(bp(small)) {
+      margin-bottom: $space-3;
+    }
+  }
+
+  &__texts-container {
+    grid-area: texts;
+  }
+
+  &__sign-in-cta-container {
+    grid-area: cta;
+  }
+
+  &__tag-line {
+    @extend %h4-sans;
+
+    text-align: center;
+    margin-bottom: $space-5;
+  }
+
+  &__description {
+    @extend %h4-sans;
+
+    font-weight: $font-weight-bold;
+    text-align: center;
+    margin-bottom: $space-4;
+  }
+
+  &__sign-in-cta {
+    margin: 0 $space-4;
+
+    @include breakpoint-min(bp(small)) {
+      margin: 0;
+    }
+  }
+}
