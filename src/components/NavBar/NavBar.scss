@@ -1,0 +1,53 @@
+@use "@/sass/index" as *;
+
+.nav-bar {
+  display: flex;
+  background-color: darken-3($color-raisin-black);
+  padding: $space-2;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  box-shadow: 0px -12px 20px 15px lighten-1($color-azure-blue);
+
+  &__logo-and-title-wrapper {
+    display: flex;
+    align-items: center;
+  }
+
+  &__logo {
+    height: 40px;
+  }
+
+  &__page-title {
+    @extend %body-sans;
+
+    font-weight: $font-weight-bold;
+    border-left: 2px solid $color-ghost-white;
+    padding-left: $space-4;
+    margin-left: $space-4;
+  }
+
+  &__user-bubble {
+    background-color: lighten-1($color-spring-green);
+    display: flex;
+    border-radius: 100px;
+    padding: $space-1;
+    align-items: center;
+  }
+
+  &__bubble-user-image {
+    width: $space-4;
+    height: $space-4;
+    border-radius: 100%;
+    margin-right: $space-3;
+  }
+
+  &__bubble-user-name {
+    @extend %body-sans;
+
+    color: $color-raisin-black;
+    font-weight: $font-weight-bold;
+    margin-right: $space-2;
+  }
+}
