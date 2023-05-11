@@ -5,6 +5,7 @@ import { jsonToQueryParams } from "@/utils"
 
 const clientID = process.env.NEXT_PUBLIC_CLIENT_ID
 const clientSecret = process.env.NEXT_PUBLIC_CLIENT_SECRET
+const redirectURL = process.env.NEXT_PUBLIC_REDIRECT_URL
 
 const handler = async (req, res) => {
   const { code } = req?.body
@@ -12,7 +13,7 @@ const handler = async (req, res) => {
   const body = jsonToQueryParams({
     code,
     grant_type: "authorization_code",
-    redirect_uri: "http://localhost:3000/login",
+    redirect_uri: redirectURL,
   })
 
   const headers = {
