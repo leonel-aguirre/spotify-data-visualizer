@@ -22,7 +22,7 @@ const Login = () => {
           const data = await dispatch(logIn(code))
 
           if (data?.success === "true") {
-            replace("/dashboard")
+            replace("/user/dashboard")
           }
           setResponseData(data)
         } catch ({ response }) {
