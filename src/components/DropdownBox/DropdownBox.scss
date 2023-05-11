@@ -1,0 +1,45 @@
+@use "@/sass/index" as *;
+
+.dropdown-box {
+  $header-button-background-color: darken-3($color-raisin-black);
+  $content-background-color: darken-1($color-raisin-black);
+
+  &__header-button {
+    padding: $space-2;
+    background-color: $header-button-background-color;
+    width: 100%;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+    display: flex;
+    align-items: center;
+  }
+
+  &__icon {
+    margin-right: $space-2;
+    font-size: $space-3;
+  }
+
+  &__title {
+    @extend %h4-sans;
+  }
+
+  &__arrow-icon {
+    margin-left: $space-2;
+    font-size: $space-4;
+  }
+
+  &__content {
+    background-color: $content-background-color;
+    width: 100%;
+    padding: 0 $space-4;
+    transition: max-height 0.5s, padding 0.5s;
+    max-height: 1000px;
+    overflow: hidden;
+
+    &--is-hidden {
+      max-height: 0;
+      padding: 0 $space-4;
+    }
+  }
+}

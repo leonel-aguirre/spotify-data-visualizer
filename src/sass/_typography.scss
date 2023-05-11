@@ -68,6 +68,16 @@ $font-weight-black: 900;
   }
 }
 
+%body-small-sans {
+  @extend %font-sans;
+
+  font-size: 12px;
+
+  @include breakpoint-min(bp(small)) {
+    font-size: 14px;
+  }
+}
+
 %large-sans {
   @extend %font-sans;
 

@@ -1,0 +1,32 @@
+@use "@/sass/index" as *;
+
+.dashboard {
+  $gradient-base-color: $color-azure-blue;
+
+  &__header {
+    padding: $space-2;
+    background: linear-gradient(
+      to bottom right,
+      darken-3($gradient-base-color),
+      $gradient-base-color
+    );
+  }
+
+  &__header-title {
+    @extend %h4-sans;
+  }
+
+  &__main-content {
+    @extend %container;
+
+    display: grid;
+
+    @include breakpoint-min(bp(small)) {
+      grid-template-columns: repeat(12, 1fr);
+    }
+  }
+
+  &__dropdown-box {
+    grid-column: span 12;
+  }
+}
