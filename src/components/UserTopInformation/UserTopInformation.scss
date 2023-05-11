@@ -1,0 +1,96 @@
+@use "@/sass/index" as *;
+
+.user-top-information {
+  $created-status-base-color: $color-spring-green;
+  $not-created-status-base-color: lighten-1($color-folly-red);
+  $status-text-color: $color-raisin-black;
+
+  display: flex;
+  align-items: center;
+  padding: $space-3 0;
+  flex-direction: column;
+
+  @include breakpoint-min(bp(small)) {
+    flex-direction: row;
+  }
+
+  &:not(:first-child) {
+    border-top: 2px solid $color-ghost-white;
+  }
+
+  &__type-status-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-bottom: $space-3;
+
+    @include breakpoint-min(bp(small)) {
+      justify-content: start;
+      margin-bottom: 0;
+    }
+  }
+
+  &__time-range {
+    @extend %body-sans;
+
+    font-weight: $font-weight-bold;
+  }
+
+  &__status {
+    @extend %body-small-sans;
+
+    font-weight: $font-weight-bold;
+    padding: calc($space-1 / 2) $space-2;
+    border-radius: 100px;
+    color: $status-text-color;
+    margin-left: $space-4;
+    display: flex;
+    align-items: center;
+
+    &--is-created {
+      background: linear-gradient(
+        to bottom right,
+        darken-1($created-status-base-color),
+        $created-status-base-color
+      );
+    }
+
+    &--is-not-created {
+      background: linear-gradient(
+        to bottom right,
+        $not-created-status-base-color,
+        lighten-2($not-created-status-base-color)
+      );
+    }
+  }
+
+  &__action-buttons-container {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin-left: 0;
+    row-gap: $space-2;
+    width: 100%;
+
+    @include breakpoint-min(bp(small)) {
+      flex-direction: row;
+      margin-left: auto;
+      width: auto;
+    }
+  }
+
+  &__actions-text {
+    @extend %body-sans;
+    font-weight: $font-weight-bold;
+  }
+
+  &__action-button {
+    margin-left: 0;
+    width: 100%;
+
+    @include breakpoint-min(bp(small)) {
+      margin-left: $space-2;
+    }
+  }
+}
