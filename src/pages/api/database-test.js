@@ -1,4 +1,4 @@
-import { push, ref, onValue, set, update } from "firebase/database"
+import { ref, update } from "firebase/database"
 
 import { auth, database } from "@/firebase-server"
 

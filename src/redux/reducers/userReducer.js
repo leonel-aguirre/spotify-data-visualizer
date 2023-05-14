@@ -1,8 +1,7 @@
 export const SET_USER_DATA = "SET_USER_DATA"
 
 export const defaultState = {
-  userName: "",
-  imageURL: "",
+  user: {},
 }
 
 const reducer = (state = defaultState, action) => {
@@ -10,9 +9,8 @@ const reducer = (state = defaultState, action) => {
     case SET_USER_DATA:
       return {
         ...defaultState,
-        ...action.payload.data,
+        user: { ...action.payload.data },
       }
-      break
     default:
       return state
   }
@@ -20,5 +18,4 @@ const reducer = (state = defaultState, action) => {
 
 export default reducer
 
-export const selectUserName = (state) => state.userReducer.userName
-export const selectImageURL = (state) => state.userReducer.imageURL
+export const selectUser = (state) => state.userReducer.user

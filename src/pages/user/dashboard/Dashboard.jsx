@@ -1,7 +1,7 @@
 import "./Dashboard.scss"
 
 import React, { useEffect } from "react"
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import Head from "next/head"
 import { faMusic, faPalette } from "@fortawesome/free-solid-svg-icons"
 
@@ -12,18 +12,23 @@ import {
 import DropdownBox from "@/components/DropdownBox/DropdownBox"
 import UserTopInformation from "@/components/UserTopInformation/UserTopInformation"
 import { useAuth } from "@/context/auth"
+import { checkUserExist } from "@/redux/actions/authenticationActions"
+import { selectUser, selectUserID } from "@/redux/reducers/userReducer"
 
 const Dashboard = () => {
   const dispatch = useDispatch()
+  const userData = useSelector(selectUser)
   const { user } = useAuth()
 
   useEffect(() => {
     // dispatch(fetchUserLongTermTopArtists())
 
-    if (user) {
-      dispatch(databaseTest(user))
+    if (user && userData.userID) {
+      dispatch(checkUserExist(user, userData))
+
+      // dispatch(databaseTest(user))
     }
-  }, [user])
+  }, [user, userData.userID])
 
   return (
     <div className="dashboard">

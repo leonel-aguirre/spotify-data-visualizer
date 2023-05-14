@@ -17,8 +17,12 @@ const handler = async (req, res) => {
 
     const filteredData = {
       userName: user.display_name,
-      imageURL: user.images[0].url,
+      userImageURL: user.images[0].url,
+      userEmail: user.email,
+      userID: user.id,
     }
+
+    // console.log({ user })
 
     res.status(200).json({ success: "true", user: filteredData })
   } catch (error) {
