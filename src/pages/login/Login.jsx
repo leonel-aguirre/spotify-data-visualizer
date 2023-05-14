@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux"
 import Head from "next/head"
 
 import { logIn, logOut } from "@/redux/actions/authenticationActions"
+import { authenticate } from "@/firebase-client"
 
 const Login = () => {
   const dispatch = useDispatch()
@@ -22,6 +23,8 @@ const Login = () => {
           const data = await dispatch(logIn(code))
 
           if (data?.success === "true") {
+            await authenticate()
+
             replace("/user/dashboard")
           }
           setResponseData(data)

@@ -1,5 +1,5 @@
-import { get } from "@/axios/api"
 import { SET_USER_DATA } from "../reducers/userReducer"
+import { get, post } from "@/axios/api"
 
 export const fetchUserData = () => async (dispatch) => {
   try {
@@ -31,4 +31,17 @@ export const fetchUserLongTermTopArtists = () => async (dispatch) => {
   } catch (error) {
     // TODO: Handle error.
   }
+}
+
+export const databaseTest = (user) => async (_dispatch) => {
+  await post("/database-test", {
+    token: await user.getIdToken(),
+    data: Date.now(),
+  })
+
+  const response = await get("/database-test", {
+    token: await user.getIdToken(),
+  })
+
+  console.log(response.data.data.data)
 }

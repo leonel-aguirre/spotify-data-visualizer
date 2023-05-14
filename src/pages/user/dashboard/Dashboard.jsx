@@ -5,16 +5,25 @@ import { useDispatch } from "react-redux"
 import Head from "next/head"
 import { faMusic, faPalette } from "@fortawesome/free-solid-svg-icons"
 
-import { fetchUserLongTermTopArtists } from "@/redux/actions/userActions"
+import {
+  databaseTest,
+  fetchUserLongTermTopArtists,
+} from "@/redux/actions/userActions"
 import DropdownBox from "@/components/DropdownBox/DropdownBox"
 import UserTopInformation from "@/components/UserTopInformation/UserTopInformation"
+import { useAuth } from "@/context/auth"
 
 const Dashboard = () => {
   const dispatch = useDispatch()
+  const { user } = useAuth()
 
   useEffect(() => {
-    dispatch(fetchUserLongTermTopArtists())
-  }, [])
+    // dispatch(fetchUserLongTermTopArtists())
+
+    if (user) {
+      dispatch(databaseTest(user))
+    }
+  }, [user])
 
   return (
     <div className="dashboard">
