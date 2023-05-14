@@ -28,8 +28,8 @@ const sendRequest = (
   return axiosInstance(config)
 }
 
-export const get = (endPoint, body, headers = {}, isURLExternal) => {
-  return sendRequest("GET", endPoint, body, headers, isURLExternal)
+export const get = (endPoint, params, headers = {}, isURLExternal) => {
+  return sendRequest("GET", endPoint, params, headers, isURLExternal)
 }
 
 export const post = (endPoint, body, headers = {}, isURLExternal) => {
