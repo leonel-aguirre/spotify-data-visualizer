@@ -31,8 +31,6 @@ const handler = async (req, res) => {
 
       const refinedData = filterArtistsFromList(data.items)
 
-      console.log("ABOUT TO SET DATA")
-
       await database
         .ref("topsByUser")
         .orderByChild("userID")

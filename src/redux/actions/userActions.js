@@ -62,8 +62,6 @@ export const fetchStoredUserTopsStatus = (user, userID) => async (dispatch) => {
 
 export const createTop =
   (user, userID, type, timeRange) => async (dispatch) => {
-    console.log({ userID, type, timeRange })
-
     let actionType = ""
 
     switch (timeRange) {
@@ -105,16 +103,3 @@ export const createTop =
       // TODO: Handle error.
     }
   }
-
-export const databaseTest = (user) => async (_dispatch) => {
-  await post("/database-test", {
-    token: await user.getIdToken(),
-    data: Date.now(),
-  })
-
-  const response = await get("/database-test", {
-    token: await user.getIdToken(),
-  })
-
-  console.log(response.data.data.data)
-}

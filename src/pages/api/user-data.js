@@ -22,8 +22,6 @@ const handler = async (req, res) => {
       userID: user.id,
     }
 
-    // console.log({ user })
-
     res.status(200).json({ success: "true", user: filteredData })
   } catch (error) {
     res.status(403).json({ success: "false" })

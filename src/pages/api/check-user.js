@@ -17,8 +17,6 @@ const handler = async (req, res) => {
       .once("value", async (snapshot) => {
         const data = snapshot.val()
 
-        console.log({ status: !data ? "Not Found" : "Found" })
-
         if (!data) {
           await push(ref(database, `users`), {
             ...userData,
