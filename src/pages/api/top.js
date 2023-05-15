@@ -1,31 +1,24 @@
-import { get } from "@/axios/api"
-import { topGenresFromList } from "./utils"
+import { auth, database } from "@/firebase-server"
 
 const handler = async (req, res) => {
-  const { token } = req.cookies
-  const { type, range } = req.query
-
-  const headers = {
-    Authorization: "Bearer " + token,
-  }
-
-  const body = {
-    time_range: range,
-    limit: 50,
-    offset: 0,
-  }
+  const { token: firebaseToken, userID, type, timeRange } = req.query
 
   try {
-    const { data } = await get(
-      `https://api.spotify.com/v1/me/top/${type}`,
-      body,
-      headers,
-      true
-    )
+    await auth.verifyIdToken(firebaseToken)
 
-    const refinedData = topGenresFromList(data.items)
+    await database
+      .ref("topsByUser")
+      .orderByChild("userID")
+      .equalTo(userID)
+      .once("value", async (snapshot) => {
+        const data = snapshot.val()
 
-    res.status(200).json({ success: "true", topArtists: refinedData })
+        const entryID = Object.keys(data)[0]
+
+        res
+          .status(200)
+          .json({ success: "true", data: data[entryID][type][timeRange] })
+      })
   } catch (error) {
     res.status(403).json({ success: "false" })
   }

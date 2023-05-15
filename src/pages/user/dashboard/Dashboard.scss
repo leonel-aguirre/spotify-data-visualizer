@@ -20,6 +20,7 @@
     @extend %container;
 
     display: grid;
+    grid-template-columns: repeat(4, 1fr);
 
     @include breakpoint-min(bp(small)) {
       grid-template-columns: repeat(12, 1fr);

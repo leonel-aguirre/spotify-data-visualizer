@@ -1,0 +1,133 @@
+@use "@/sass/index" as *;
+
+.top {
+  $gradient-base-color: $color-azure-blue;
+  $main-content-background-color: darken-1($color-raisin-black);
+  $data-item-white-color: $color-ghost-white;
+  $data-item-red-color: lighten-1($color-folly-red);
+  $data-item-blue-color: lighten-1($color-azure-blue);
+  $data-item-green-color: lighten-1($color-spring-green);
+  $data-item-yellow-color: lighten-1($color-arylide-yellow);
+  $data-item-purple-color: lighten-1($color-amethyst-purple);
+
+  &__header {
+    padding: $space-2;
+    background: linear-gradient(
+      to bottom right,
+      darken-3($gradient-base-color),
+      $gradient-base-color
+    );
+    display: flex;
+  }
+
+  &__back-button {
+    @extend %body-sans;
+
+    font-weight: $font-weight-bold;
+    margin-right: $space-3;
+    background: none;
+    border: none;
+    cursor: pointer;
+    border-radius: 10px;
+    padding: 0 $space-2;
+    transition: background-color 0.25s;
+    background-color: darken-3($color-azure-blue);
+
+    &:hover {
+      background-color: ($color-azure-blue);
+    }
+
+    &:active {
+      background-color: lighten-1($color-azure-blue);
+    }
+  }
+
+  &__header-title {
+    @extend %h4-sans;
+  }
+
+  &__main-content {
+    @extend %container;
+
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    background-color: $main-content-background-color;
+    grid-template-areas:
+      "description description description description"
+      "results results results results";
+    padding: $space-4 $space-4;
+
+    @include breakpoint-min(bp(small)) {
+      padding: $space-6 0;
+      grid-template-columns: repeat(12, 1fr);
+      grid-template-areas:
+        ". description description description description description description description description description description ."
+        ". results results results results results results results results results results .";
+    }
+  }
+
+  &__description-container {
+    grid-area: description;
+    flex-direction: column;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+
+  &__description-title {
+    @extend %h2-sans;
+
+    font-weight: $font-weight-bold;
+  }
+
+  &__description-subtitle {
+    @extend %h4-sans;
+
+    font-weight: $font-weight-semibold;
+    margin-bottom: $space-4;
+  }
+
+  &__results-container {
+    grid-area: results;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    column-gap: $space-1;
+    padding: $space-4 0;
+    margin-bottom: $space-4;
+    border-top: 3px solid $color-ghost-white;
+    border-bottom: 3px solid $color-ghost-white;
+  }
+
+  &__data-item {
+    @extend %h4-sans;
+
+    font-weight: $font-weight-black;
+    text-align: center;
+
+    &--is-white {
+      color: $data-item-white-color;
+    }
+
+    &--is-red {
+      color: $data-item-red-color;
+    }
+
+    &--is-blue {
+      color: $data-item-blue-color;
+    }
+
+    &--is-green {
+      color: $data-item-green-color;
+    }
+
+    &--is-yellow {
+      color: $data-item-yellow-color;
+    }
+
+    &--is-purple {
+      color: $data-item-purple-color;
+    }
+  }
+}

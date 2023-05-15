@@ -4,6 +4,8 @@ $color-ghost-white: #f8f8ff;
 $color-folly-red: #fc2453;
 $color-azure-blue: #3185fc;
 $color-spring-green: #40f99b;
+$color-amethyst-purple: #9883e5;
+$color-arylide-yellow: #fce15a;
 
 @function monochrome-gradient($color: $color-black, $degrees: 90deg) {
   @return linear-gradient($degrees, $color 0%, lighten-2($color) 100%);
