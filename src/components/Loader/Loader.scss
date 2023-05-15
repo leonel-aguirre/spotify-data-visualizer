@@ -1,0 +1,21 @@
+@use "@/sass/index" as *;
+
+.loader {
+  $icon-color: $color-ghost-white;
+
+  &--is-small {
+    font-size: $space-2;
+  }
+
+  &--is-medium {
+    font-size: $space-4;
+  }
+
+  &--is-large {
+    font-size: $space-6;
+  }
+
+  &__icon {
+    color: $icon-color;
+  }
+}

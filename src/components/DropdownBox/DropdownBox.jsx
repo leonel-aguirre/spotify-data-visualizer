@@ -4,8 +4,14 @@ import React, { useState } from "react"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons"
 
-const DropdownBox = ({ title, className, icon, children }) => {
-  const [isOpen, setIsOpen] = useState(false)
+const DropdownBox = ({
+  title,
+  className,
+  icon,
+  children,
+  defaultOpenState = false,
+}) => {
+  const [isOpen, setIsOpen] = useState(defaultOpenState)
 
   const handleHeaderButtonClick = () => {
     setIsOpen(!isOpen)

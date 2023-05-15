@@ -65,6 +65,10 @@
     }
   }
 
+  &__loader {
+    margin-left: $space-4;
+  }
+
   &__action-buttons-container {
     display: flex;
     align-items: center;

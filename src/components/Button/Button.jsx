@@ -2,7 +2,6 @@ import "./Button.scss"
 
 const Button = ({
   children,
-  onClick,
   type = Button.DEFAULT,
   isSmall = false,
   className = "",
@@ -10,11 +9,10 @@ const Button = ({
 }) => {
   return (
     <button
-      {...rest}
       className={`button is-${type} is-${
         isSmall ? "small" : "large"
       } ${className}`}
-      onClick={onClick}
+      {...rest}
     >
       {children}
     </button>
