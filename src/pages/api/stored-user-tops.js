@@ -33,12 +33,12 @@ const handler = async (req, res) => {
             const entryID = Object.keys(data)[0]
 
             existingTops = {
-              artistShortTerm: !!data[entryID]?.artist?.shortTerm,
-              artistMidTerm: !!data[entryID]?.artist?.midTerm,
-              artistLongTerm: !!data[entryID]?.artist?.longTerm,
-              trackShortTerm: !!data[entryID]?.track?.shortTerm,
-              trackMidTerm: !!data[entryID]?.track?.midTerm,
-              trackLongTerm: !!data[entryID]?.track?.longTerm,
+              artistShortTerm: !!data[entryID]?.artists?.short_term,
+              artistMidTerm: !!data[entryID]?.artists?.medium_term,
+              artistLongTerm: !!data[entryID]?.artists?.long_term,
+              trackShortTerm: !!data[entryID]?.tracks?.short_term,
+              trackMidTerm: !!data[entryID]?.tracks?.medium_term,
+              trackLongTerm: !!data[entryID]?.tracks?.long_term,
             }
           }
         })

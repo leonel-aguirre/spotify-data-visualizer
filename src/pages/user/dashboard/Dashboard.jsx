@@ -42,22 +42,22 @@ const Dashboard = () => {
         >
           <UserTopInformation
             data={{
-              type: "artist",
-              timeRange: "Short Term",
+              type: "artists",
+              timeRange: "short_term",
               isCreated: topsStatus.artistShortTerm,
             }}
           />
           <UserTopInformation
             data={{
-              type: "artist",
-              timeRange: "Mid Term",
+              type: "artists",
+              timeRange: "medium_term",
               isCreated: topsStatus.artistMidTerm,
             }}
           />
           <UserTopInformation
             data={{
-              type: "artist",
-              timeRange: "Long Term",
+              type: "artists",
+              timeRange: "long_term",
               isCreated: topsStatus.artistLongTerm,
             }}
           />
@@ -69,22 +69,22 @@ const Dashboard = () => {
         >
           <UserTopInformation
             data={{
-              type: "track",
-              timeRange: "Short Term",
+              type: "tracks",
+              timeRange: "short_term",
               isCreated: topsStatus.trackShortTerm,
             }}
           />
           <UserTopInformation
             data={{
-              type: "track",
-              timeRange: "Mid Term",
+              type: "tracks",
+              timeRange: "medium_term",
               isCreated: topsStatus.trackMidTerm,
             }}
           />
           <UserTopInformation
             data={{
-              type: "track",
-              timeRange: "Long Term",
+              type: "tracks",
+              timeRange: "long_term",
               isCreated: topsStatus.trackLongTerm,
             }}
           />

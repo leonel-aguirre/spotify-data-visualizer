@@ -25,7 +25,7 @@ const sendRequest = (
     config.data = body
   }
 
-  // console.log({ config })
+  console.log({ config })
 
   return axiosInstance(config)
 }

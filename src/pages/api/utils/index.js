@@ -32,5 +32,11 @@ export const topGenresFromList = (list) => {
       Math.round((genreSums[genreKey] / sumTotal) * 100 * 10) / 10
   })
 
+  console.log({ genreData, genreSums, genrePercentages, sumTotal })
+
   return genrePercentages
+}
+
+export const filterArtistsFromList = (list) => {
+  return list.map((artist) => artist.name)
 }
