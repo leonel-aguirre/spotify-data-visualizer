@@ -1,0 +1,21 @@
+@use "@/sass/index" as *;
+
+.login {
+  @extend %container;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+
+  &__title {
+    @extend %h2-sans;
+
+    text-transform: uppercase;
+  }
+
+  &__loader {
+    margin-top: $space-5;
+  }
+}

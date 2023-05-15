@@ -1,14 +1,15 @@
 import "./UserTopInformation.scss"
 
-import React from "react"
+import React, { useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { useRouter } from "next/router"
 
-import Button from "../Button/Button"
 import { jsonToQueryParams } from "@/utils"
 import { createTop } from "@/redux/actions/userActions"
 import { useAuth } from "@/context/auth"
 import { selectUser } from "@/redux/reducers/userReducer"
+import Button from "../Button/Button"
+import Loader from "../Loader/Loader"
 
 const getLabel = (timeRange) => {
   switch (timeRange) {
@@ -26,6 +27,7 @@ const UserTopInformation = ({ data }) => {
   const userData = useSelector(selectUser)
   const { push } = useRouter()
   const { user } = useAuth()
+  const [isLoading, setIsLoading] = useState(false)
   const { type, isCreated, timeRange } = data
 
   const handleViewButton = () => {
@@ -38,8 +40,10 @@ const UserTopInformation = ({ data }) => {
     )
   }
 
-  const handleCreateButton = () => {
-    dispatch(createTop(user, userData.userID, type, timeRange))
+  const handleCreateButton = async () => {
+    setIsLoading(true)
+    await dispatch(createTop(user, userData.userID, type, timeRange))
+    setIsLoading(false)
   }
 
   const renderActionButtons = () => {
@@ -78,12 +82,9 @@ const UserTopInformation = ({ data }) => {
     }
   }
 
-  return (
-    <div className="user-top-information">
-      <div className="user-top-information__type-status-wrapper">
-        <p className="user-top-information__time-range">
-          {getLabel(timeRange)}
-        </p>
+  const renderStatus = () => {
+    if (!isLoading) {
+      return (
         <span
           className={`user-top-information__status user-top-information__status--is-${
             isCreated ? "created" : "not-created"
@@ -91,6 +92,21 @@ const UserTopInformation = ({ data }) => {
         >
           {isCreated ? "CREATED" : "NOT CREATED"}
         </span>
+      )
+    }
+
+    return (
+      <Loader size={Loader.SMALL} className="user-top-information__loader" />
+    )
+  }
+
+  return (
+    <div className="user-top-information">
+      <div className="user-top-information__type-status-wrapper">
+        <p className="user-top-information__time-range">
+          {getLabel(timeRange)}
+        </p>
+        {renderStatus()}
       </div>
       <div className="user-top-information__action-buttons-container">
         <p className="user-top-information__actions-text">Actions:</p>

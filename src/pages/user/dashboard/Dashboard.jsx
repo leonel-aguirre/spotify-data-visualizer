@@ -36,6 +36,7 @@ const Dashboard = () => {
       </header>
       <main className="dashboard__main-content">
         <DropdownBox
+          defaultOpenState={false}
           className="dashboard__dropdown-box"
           title={"Your Top Artists"}
           icon={faPalette}
@@ -63,6 +64,7 @@ const Dashboard = () => {
           />
         </DropdownBox>
         <DropdownBox
+          defaultOpenState={false}
           className="dashboard__dropdown-box"
           title={"Your Top Tracks"}
           icon={faMusic}

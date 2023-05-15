@@ -27,20 +27,21 @@ export const fetchUserData = () => async (dispatch) => {
   }
 }
 
-export const fetchUserLongTermTopArtists = () => async (dispatch) => {
-  try {
-    const {
-      data: { topArtists },
-    } = await get("/top", {
-      type: "artists",
-      range: "long_term",
-    })
+export const fetchUserTop =
+  (user, userID, type, timeRange) => async (_dispatch) => {
+    try {
+      const { data } = await get("/top", {
+        token: await user.getIdToken(),
+        userID,
+        type,
+        timeRange,
+      })
 
-    // TODO: Store with redux.
-  } catch (error) {
-    // TODO: Handle error.
+      return data.data
+    } catch (error) {
+      // TODO: Handle error.
+    }
   }
-}
 
 export const fetchStoredUserTopsStatus = (user, userID) => async (dispatch) => {
   try {
