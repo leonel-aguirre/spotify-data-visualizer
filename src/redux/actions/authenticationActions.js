@@ -19,3 +19,7 @@ export const logIn = (authorizationCode) => async () => {
 export const logOut = () => () => {
   post("/logout")
 }
+
+export const checkUserExist = (user, userData) => async () => {
+  await post("/check-user", { token: await user.getIdToken(), userData })
+}

@@ -34,3 +34,7 @@ export const topGenresFromList = (list) => {
 
   return genrePercentages
 }
+
+export const filterArtistsFromList = (list) => {
+  return list.map((artist) => artist.name)
+}
