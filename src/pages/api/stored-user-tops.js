@@ -13,6 +13,7 @@ const handler = async (req, res) => {
       trackShortTerm: false,
       trackMidTerm: false,
       trackLongTerm: false,
+      genreFullActivity: false,
     }
 
     try {
@@ -39,6 +40,7 @@ const handler = async (req, res) => {
               trackShortTerm: !!data[entryID]?.tracks?.short_term,
               trackMidTerm: !!data[entryID]?.tracks?.medium_term,
               trackLongTerm: !!data[entryID]?.tracks?.long_term,
+              genreFullActivity: !!data[entryID]?.genres?.full_activity,
             }
           }
         })

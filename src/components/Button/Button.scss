@@ -93,24 +93,24 @@ $glow-button-background-color: $color-raisin-black;
     }
   }
 
-  // &.is-warning {
-  //   $hover-background-color: $color-yellow;
-  //   $yellow-gradient: monochrome-gradient($color-yellow, 45deg);
+  &.is-warning {
+    $hover-background-color: $color-arylide-yellow;
+    $yellow-gradient: monochrome-gradient($color-arylide-yellow, 45deg);
 
-  //   background: linear-gradient(
-  //         $glow-button-background-color,
-  //         $glow-button-background-color
-  //       )
-  //       padding-box,
-  //     $yellow-gradient border-box;
+    background: linear-gradient(
+          $glow-button-background-color,
+          $glow-button-background-color
+        )
+        padding-box,
+      $yellow-gradient border-box;
 
-  //   &:hover {
-  //     box-shadow: 0 0 20px $color-yellow;
-  //     background: $yellow-gradient padding-box, $yellow-gradient border-box;
-  //   }
+    &:hover {
+      box-shadow: 0 0 20px $color-arylide-yellow;
+      background: $yellow-gradient padding-box, $yellow-gradient border-box;
+    }
 
-  //   &:active {
-  //     box-shadow: 0 0 40px $color-yellow;
-  //   }
-  // }
+    &:active {
+      box-shadow: 0 0 40px $color-arylide-yellow;
+    }
+  }
 }
