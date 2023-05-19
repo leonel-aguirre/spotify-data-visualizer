@@ -2,7 +2,7 @@ import { set, ref } from "firebase/database"
 
 import { auth, database } from "@/firebase-server"
 import { get } from "@/axios/api"
-import { filterArtistsFromList } from "./utils"
+import { filterArtistsFromList, topGenresFromArtistsList } from "./utils"
 
 const handler = async (req, res) => {
   if (req.method === "POST") {
@@ -22,14 +22,30 @@ const handler = async (req, res) => {
     try {
       await auth.verifyIdToken(firebaseToken)
 
-      const { data } = await get(
-        `https://api.spotify.com/v1/me/top/${type}`,
-        body,
-        headers,
-        true
-      )
+      let refinedData
 
-      const refinedData = filterArtistsFromList(data.items)
+      if (type === "genres" && timeRange === "full_activity") {
+        const { data } = await get(
+          `https://api.spotify.com/v1/me/top/artists`,
+          {
+            ...body,
+            time_range: "long_term",
+          },
+          headers,
+          true
+        )
+
+        refinedData = topGenresFromArtistsList(data.items)
+      } else {
+        const { data } = await get(
+          `https://api.spotify.com/v1/me/top/${type}`,
+          body,
+          headers,
+          true
+        )
+
+        refinedData = filterArtistsFromList(data.items)
+      }
 
       await database
         .ref("topsByUser")

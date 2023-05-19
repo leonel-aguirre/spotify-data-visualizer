@@ -1,4 +1,4 @@
-export const topGenresFromList = (list) => {
+export const topGenresFromArtistsList = (list) => {
   const genres = list.map((item) => item.genres)
 
   let genreData = {}
@@ -32,9 +32,24 @@ export const topGenresFromList = (list) => {
       Math.round((genreSums[genreKey] / sumTotal) * 100 * 10) / 10
   })
 
-  return genrePercentages
+  return Object.keys(genrePercentages).map((key) => {
+    return {
+      genre: kebabToTitleCase(key),
+      value: genrePercentages[key],
+    }
+  })
 }
 
 export const filterArtistsFromList = (list) => {
   return list.map((artist) => artist.name)
+}
+
+export const kebabToTitleCase = (kebabCaseString) => {
+  const words = kebabCaseString.split("-")
+  const titleCaseWords = words.map(
+    (word) => word.charAt(0).toUpperCase() + word.slice(1)
+  )
+  const titleCaseString = titleCaseWords.join(" ")
+
+  return titleCaseString
 }

@@ -19,6 +19,8 @@ const getLabel = (timeRange) => {
       return "Mid Term"
     case "long_term":
       return "Long Term"
+    case "full_activity":
+      return "Full Activity Overview"
   }
 }
 
@@ -40,7 +42,7 @@ const UserTopInformation = ({ data }) => {
     )
   }
 
-  const handleCreateButton = async () => {
+  const handleCreateUpdateButton = async () => {
     setIsLoading(true)
     await dispatch(createTop(user, userData.userID, type, timeRange))
     setIsLoading(false)
@@ -60,11 +62,11 @@ const UserTopInformation = ({ data }) => {
           </Button>
           <Button
             className="user-top-information__action-button"
-            type={Button.DEFAULT}
+            type={Button.WARNING}
             isSmall={true}
-            onClick={handleCreateButton}
+            onClick={handleCreateUpdateButton}
           >
-            Create
+            Update
           </Button>
         </>
       )
@@ -74,7 +76,7 @@ const UserTopInformation = ({ data }) => {
           className="user-top-information__action-button"
           type={Button.SUCCESS}
           isSmall={true}
-          onClick={handleCreateButton}
+          onClick={handleCreateUpdateButton}
         >
           Create
         </Button>
