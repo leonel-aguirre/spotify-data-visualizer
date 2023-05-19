@@ -9,6 +9,7 @@ export const SET_TOP_TRACKS_SHORT_TERM_STATUS =
   "SET_TOP_TRACKS_SHORT_TERM_STATUS"
 export const SET_TOP_TRACKS_MID_TERM_STATUS = "SET_TOP_TRACKS_MID_TERM_STATUS"
 export const SET_TOP_TRACKS_LONG_TERM_STATUS = "SET_TOP_TRACKS_LONG_TERM_STATUS"
+export const SET_TOP_GENRES_FULL_ACTIVITY = "SET_TOP_GENRES_FULL_ACTIVITY"
 
 export const defaultState = {
   user: {
@@ -24,6 +25,7 @@ export const defaultState = {
     trackShortTerm: false,
     trackMidTerm: false,
     trackLongTerm: false,
+    genreFullActivity: true,
   },
 }
 
@@ -87,6 +89,15 @@ const reducer = (state = defaultState, action) => {
           trackLongTerm: action.payload.data,
         },
       }
+    case SET_TOP_GENRES_FULL_ACTIVITY:
+      return {
+        ...state,
+        topsStatus: {
+          ...state.topsStatus,
+          genreFullActivity: action.payload.data,
+        },
+      }
+
     default:
       return state
   }

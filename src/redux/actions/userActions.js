@@ -6,6 +6,7 @@ import {
   SET_TOP_TRACKS_LONG_TERM_STATUS,
   SET_TOP_TRACKS_MID_TERM_STATUS,
   SET_TOP_TRACKS_SHORT_TERM_STATUS,
+  SET_TOP_GENRES_FULL_ACTIVITY,
   SET_USER_DATA,
 } from "../reducers/userReducer"
 import { get, post } from "@/axios/api"
@@ -83,6 +84,8 @@ export const createTop =
           type === "artists"
             ? SET_TOP_ARTISTS_LONG_TERM_STATUS
             : SET_TOP_TRACKS_LONG_TERM_STATUS
+      case "full_activity":
+        actionType = SET_TOP_GENRES_FULL_ACTIVITY
         break
     }
 
