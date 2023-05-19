@@ -85,7 +85,6 @@
     @extend %h4-sans;
 
     font-weight: $font-weight-semibold;
-    margin-bottom: $space-4;
   }
 
   &__results-container {
@@ -95,7 +94,7 @@
     justify-content: center;
     column-gap: $space-1;
     padding: $space-4 0;
-    margin-bottom: $space-4;
+    margin: $space-4 0;
     border-top: 3px solid $color-ghost-white;
     border-bottom: 3px solid $color-ghost-white;
   }
@@ -128,6 +127,14 @@
 
     &--is-purple {
       color: $data-item-purple-color;
+    }
+  }
+
+  &__chart {
+    width: 100%;
+
+    @include breakpoint-min(bp(small)) {
+      padding: 0 $space-6;
     }
   }
 }

@@ -3,7 +3,7 @@ import "./Dashboard.scss"
 import React, { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import Head from "next/head"
-import { faMusic, faPalette } from "@fortawesome/free-solid-svg-icons"
+import { faMusic, faPalette, faStar } from "@fortawesome/free-solid-svg-icons"
 
 import { fetchStoredUserTopsStatus } from "@/redux/actions/userActions"
 import DropdownBox from "@/components/DropdownBox/DropdownBox"
@@ -88,6 +88,20 @@ const Dashboard = () => {
               type: "tracks",
               timeRange: "long_term",
               isCreated: topsStatus.trackLongTerm,
+            }}
+          />
+        </DropdownBox>
+        <DropdownBox
+          defaultOpenState={false}
+          className="dashboard__dropdown-box"
+          title={"Your Top Genres"}
+          icon={faStar}
+        >
+          <UserTopInformation
+            data={{
+              type: "genres",
+              timeRange: "full_activity",
+              isCreated: topsStatus.genreFullActivity,
             }}
           />
         </DropdownBox>

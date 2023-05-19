@@ -10,6 +10,7 @@ import { faChevronLeft } from "@fortawesome/free-solid-svg-icons"
 import { useAuth } from "@/context/auth"
 import { selectUser } from "@/redux/reducers/userReducer"
 import { fetchUserTop } from "@/redux/actions/userActions"
+import PieChart from "@/components/PieChart/PieChart"
 
 const formatTimeRange = (timeRange) => {
   switch (timeRange) {
@@ -19,6 +20,8 @@ const formatTimeRange = (timeRange) => {
       return "Mid Term"
     case "long_term":
       return "Long Term"
+    case "full_activity":
+      return "Full Activity"
     default:
       return ""
   }
@@ -31,6 +34,8 @@ const formatType = (type) => {
       return "Artists"
     case "tracks":
       return "Tracks"
+    case "genres":
+      return "Genres"
     default:
       return ""
   }
@@ -44,6 +49,8 @@ const getTimeText = (timeRange) => {
       return "6 Months"
     case "long_term":
       return "Few Years"
+    case "full_activity":
+      return "Full Activity"
     default:
       return ""
   }
@@ -71,6 +78,8 @@ const Top = () => {
     replace,
   } = useRouter()
 
+  const shouldRenderChart = type === "genres" && timeRange === "full_activity"
+
   // useEffect(() => {
   //   if (!type && !timeRange) {
   //     replace("/user/dashboard")
@@ -96,6 +105,8 @@ const Top = () => {
   }, [user, userData.userID])
 
   const renderDataItem = (item) => {
+    const value = shouldRenderChart ? item?.genre : item
+
     let colorIndex = Math.floor(Math.random() * itemColors.length)
 
     while (colorIndex === lastIndex) {
@@ -105,14 +116,28 @@ const Top = () => {
     lastIndex = colorIndex
 
     return (
-      <div key={item} className={`top__data-item ${itemColors[colorIndex]}`}>
-        {item}
+      <div key={value} className={`top__data-item ${itemColors[colorIndex]}`}>
+        {value}
       </div>
     )
   }
 
   const backButtonHandler = () => {
     replace("/user/dashboard")
+  }
+
+  const renderResults = () => {
+    if (shouldRenderChart) {
+      return (
+        <PieChart
+          className="top__chart"
+          labels={topData?.map((item) => item.genre)}
+          data={topData?.map((item) => item.value)}
+        />
+      )
+    }
+
+    return <>{topData?.map((item) => renderDataItem(item))}</>
   }
 
   return (
@@ -134,14 +159,14 @@ const Top = () => {
           <h2 className="top__description-title">
             {`Your ${formatTimeRange(timeRange)} Top ${formatType(type)}`}
           </h2>
-          <p className="top__description-subtitle">{`(Last ${getTimeText(
-            timeRange
-          )})`}</p>
+          {!shouldRenderChart && (
+            <p className="top__description-subtitle">{`(Last ${getTimeText(
+              timeRange
+            )})`}</p>
+          )}
         </div>
 
-        <div className="top__results-container">
-          {topData?.map((item) => renderDataItem(item))}
-        </div>
+        <div className="top__results-container">{renderResults()}</div>
       </main>
     </div>
   )
