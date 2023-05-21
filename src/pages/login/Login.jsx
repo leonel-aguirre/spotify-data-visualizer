@@ -5,7 +5,11 @@ import { useRouter } from "next/router"
 import { useDispatch } from "react-redux"
 import Head from "next/head"
 
-import { logIn } from "@/redux/actions/authenticationActions"
+import {
+  getAfterSignInRedirectURL,
+  logIn,
+  unsetAfterSignInRedirectURL,
+} from "@/redux/actions/authenticationActions"
 import { authenticate } from "@/firebase-client"
 import Loader from "@/components/Loader/Loader"
 
@@ -27,13 +31,21 @@ const Login = () => {
           if (data?.success === "true") {
             await authenticate()
 
-            replace("/user/dashboard")
+            const afterSignInRedirectURL = await dispatch(
+              getAfterSignInRedirectURL()
+            )
+
+            await dispatch(unsetAfterSignInRedirectURL())
+
+            if (afterSignInRedirectURL) {
+              replace(afterSignInRedirectURL)
+            } else {
+              replace("/user/dashboard")
+            }
           }
         } catch {
           replace("/")
         }
-      } else {
-        replace("/")
       }
     }
 

@@ -1,6 +1,8 @@
 @use "@/sass/index" as *;
 
 .nav-bar {
+  $popover-background-color: transparentize($color-raisin-black, 0.1);
+
   display: flex;
   background-color: darken-3($color-raisin-black);
   padding: $space-2;
@@ -28,12 +30,23 @@
     margin-left: $space-4;
   }
 
-  &__user-bubble {
-    background-color: lighten-1($color-spring-green);
+  &__user-bubble-button {
     display: flex;
     border-radius: 100px;
     padding: $space-1;
     align-items: center;
+    border: none;
+    background-color: lighten-1($color-spring-green);
+    transition: box-shadow 0.5s, color 0.5s;
+    cursor: pointer;
+
+    &:hover {
+      box-shadow: 0 0 20px $color-spring-green;
+    }
+
+    &:active {
+      box-shadow: 0 0 40px $color-spring-green;
+    }
   }
 
   &__bubble-user-image {
@@ -49,5 +62,45 @@
     color: $color-raisin-black;
     font-weight: $font-weight-bold;
     margin-right: $space-2;
+  }
+
+  &__caret-icon {
+    color: $color-raisin-black;
+    margin-right: $space-2;
+    font-size: $space-2;
+  }
+
+  &__popover {
+    background-color: $popover-background-color;
+    padding: $space-1;
+    border-radius: 20px;
+  }
+
+  &__popover-arrow {
+    border-bottom-color: $popover-background-color !important;
+    top: -10px !important;
+  }
+
+  &__popover-log-out-button {
+    @extend %body-sans;
+
+    background-color: $color-folly-red;
+    display: flex;
+    border-radius: 100px;
+    padding: $space-1 $space-2;
+    align-items: center;
+    border: none;
+    color: $color-raisin-black;
+    font-weight: $font-weight-bold;
+    transition: box-shadow 0.5s, color 0.5s;
+    cursor: pointer;
+
+    &:hover {
+      box-shadow: 0 0 20px $color-folly-red;
+    }
+
+    &:active {
+      box-shadow: 0 0 40px $color-folly-red;
+    }
   }
 }
