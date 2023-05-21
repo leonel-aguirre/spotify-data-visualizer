@@ -53,3 +53,12 @@ export const kebabToTitleCase = (kebabCaseString) => {
 
   return titleCaseString
 }
+
+export const getAffinityPercentage = (topA, topB) => {
+  const commonElements = topA.filter((item) => topB.includes(item))
+
+  const affinityPercentage =
+    commonElements.length / new Set(topA.concat(topB)).size
+
+  return Math.round(affinityPercentage * 100) / 100
+}
