@@ -17,6 +17,9 @@ const Compare = () => {
   const dispatch = useDispatch()
   const userData = useSelector(selectUser)
   const [affinityData, setAffinityData] = useState(null)
+  const shouldRenderNoteSection = affinityData?.topsAffinities?.some(
+    ({ affinity }) => affinity === null
+  )
 
   const {
     query: { userID: userFriendID },
@@ -113,13 +116,22 @@ const Compare = () => {
   return (
     <div className="affinity">
       <Head>
-        <title>Friend Affinity</title>
+        <title>Friendship Affinity</title>
       </Head>
 
       <header className="affinity__header">
-        <h1 className="affinity__header-title">Friend Affinity</h1>
+        <h1 className="affinity__header-title">Friendship Affinity</h1>
       </header>
       <main className="affinity__main-content">
+        <section className="affinity__page-description-wrapper">
+          <h4 className="affinity__page-description-title">
+            Discover Your Musical Affinity
+          </h4>
+          <p className="affinity__page-description-subtitle">
+            Let the melodies guide your friendship, and enjoy discovering your
+            musical affinity on this Friendship Affinity Page!
+          </p>
+        </section>
         <section className="affinity__users-name-and-image-wrapper">
           <div className="affinity__user-name-and-image">
             <img
@@ -148,6 +160,20 @@ const Compare = () => {
         <section className="affinity__affinity-data-wrapper">
           {renderAffinityData(affinityData?.topsAffinities)}
         </section>
+        {shouldRenderNoteSection && (
+          <section className="affinity__note-section">
+            <p className="affinity__note">
+              <span className="affinity__note-label">NOTE: </span>
+              It seems that either you or your friend are missing some top picks
+              in certain categories. These missing entries are marked with a sad
+              face ({<FontAwesomeIcon icon={faFaceFrown} />}).
+              {` But don't worry! You can easily create and update these missing 
+            tops to get a more accurate measure of your musical affinity. Simply 
+            create them from your dashboard and return to this page later to see 
+            the updated affinity percentage.`}
+            </p>
+          </section>
+        )}
       </main>
     </div>
   )

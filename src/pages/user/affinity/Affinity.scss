@@ -6,6 +6,7 @@
   $image-bubble-border-color: $color-ghost-white;
   $divider-item-background-color: $color-ghost-white;
   $divider-border-color: $color-ghost-white;
+  $description-gradient-base-color: $color-amethyst-purple;
 
   &__header {
     padding: $space-2;
@@ -27,25 +28,59 @@
     background-color: $main-content-background-color;
     grid-template-columns: repeat(4, 1fr);
     grid-template-areas:
+      "info info info info"
       "user-data user-data user-data user-data"
-      "results results results results";
-    padding: $space-6 0;
+      "results results results results"
+      "note note note note";
+    padding-bottom: $space-6;
 
     @include breakpoint-min(bp(small)) {
       margin: auto;
       grid-template-columns: repeat(12, 1fr);
       grid-template-areas:
+        "info info info info info info info info info info info info"
         ". . . user-data user-data user-data user-data user-data user-data . . ."
-        ". results results results results results results results results results results .";
+        ". results results results results results results results results results results ."
+        ". note note note note note note note note note note .";
     }
+  }
+
+  &__page-description-wrapper {
+    grid-area: info;
+    padding: $space-3;
+    background: monochrome-gradient(
+      darken-3($description-gradient-base-color),
+      to right bottom
+    );
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    @include breakpoint-min(bp(small)) {
+      padding: $space-3 $space-6;
+    }
+  }
+
+  &__page-description-title {
+    @extend %h4-sans;
+
+    text-align: center;
+  }
+
+  &__page-description-subtitle {
+    @extend %body-sans;
+
+    font-weight: $font-weight-medium;
+    text-align: center;
   }
 
   &__users-name-and-image-wrapper {
     grid-area: user-data;
     display: flex;
     column-gap: $space-3;
-    border-bottom: 3px solid $divider-border-color;
     padding-bottom: $space-4;
+    margin-top: $space-5;
+    padding: 0 $space-3;
   }
 
   &__user-name-and-image {
@@ -59,6 +94,10 @@
     border-radius: 100%;
     width: $space-7;
     border: 3px solid $image-bubble-border-color;
+
+    @include breakpoint-min(bp(small)) {
+      width: $space-7;
+    }
   }
 
   &__user-name {
@@ -66,6 +105,7 @@
 
     font-weight: $font-weight-bold;
     margin-top: $space-2;
+    text-align: center;
   }
 
   &__users-data-divider-wrapper {
@@ -77,17 +117,35 @@
   }
 
   &__users-data-divider-item {
-    width: $space-2;
-    height: $space-2;
+    width: $space-1;
+    height: $space-1;
     background-color: $divider-item-background-color;
     border-radius: 100%;
-    animation: size-animation 1s infinite alternate ease-in-out;
+    animation: size-animation-a 1s infinite alternate ease-in-out;
+
+    @include breakpoint-min(bp(small)) {
+      animation: size-animation-b 1s infinite alternate ease-in-out;
+      width: $space-2;
+      height: $space-2;
+    }
 
     &:nth-child(2n) {
       animation-direction: alternate-reverse;
     }
 
-    @keyframes size-animation {
+    @keyframes size-animation-a {
+      from {
+        width: $space-1;
+        height: $space-1;
+      }
+
+      to {
+        width: $space-2;
+        height: $space-2;
+      }
+    }
+
+    @keyframes size-animation-b {
       from {
         width: $space-2;
         height: $space-2;
@@ -104,7 +162,15 @@
     grid-area: results;
     margin-top: $space-6;
     display: flex;
-    column-gap: $space-4;
+    flex-direction: column;
+    row-gap: $space-6;
+    padding: 0 $space-3;
+
+    @include breakpoint-min(bp(small)) {
+      padding: $space-3 0;
+      flex-direction: row;
+      column-gap: $space-4;
+    }
   }
 
   &__tops-group {
@@ -124,7 +190,7 @@
   &__tops-group-title {
     @extend %h4-sans;
 
-    border-bottom: 5px solid white;
+    border-bottom: 5px solid $color-ghost-white;
   }
 
   &__tops-percentages-wrapper {
@@ -174,5 +240,25 @@
 
     font-weight: $font-weight-bold;
     margin-top: $space-1;
+  }
+
+  &__note-section {
+    grid-area: note;
+    margin-top: $space-6;
+    padding: 0 $space-3;
+
+    @include breakpoint-min(bp(small)) {
+      padding: 0;
+    }
+  }
+
+  &__note {
+    @extend %body-small-sans;
+
+    text-align: justify;
+  }
+
+  &__note-label {
+    font-weight: $font-weight-black;
   }
 }
