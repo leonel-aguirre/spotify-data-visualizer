@@ -74,6 +74,8 @@ const handler = async (req, res) => {
     let friendTops
     let userTops
     let refinedData
+    let friendImageURL
+    let friendUserName
 
     try {
       await auth.verifyIdToken(token)
@@ -117,6 +119,25 @@ const handler = async (req, res) => {
       await updateUserFriends(userID, userFriendID)
       await updateUserFriends(userFriendID, userID)
 
+      await database
+        .ref("users")
+        .orderByChild("userID")
+        .equalTo(userFriendID)
+        .once("value", async (snapshot) => {
+          const data = snapshot.val()
+
+          if (data) {
+            const entryID = Object.keys(data)[0]
+
+            friendImageURL = data[entryID]?.userImageURL
+            friendUserName = data[entryID]?.userName
+          } else {
+            res
+              .status(400)
+              .json({ success: false, message: "userID is not registered." })
+          }
+        })
+
       refinedData = possibleTops.map((top) => {
         if (
           !!friendTops?.[top.type]?.[top.range] &&
@@ -131,7 +152,10 @@ const handler = async (req, res) => {
         }
       })
 
-      res.status(200).json({ success: true, data: refinedData })
+      res.status(200).json({
+        success: true,
+        data: { topsAffinities: refinedData, friendImageURL, friendUserName },
+      })
     } catch (error) {
       res.status(401).json({ status: "error", message: "Unauthorized." })
     }

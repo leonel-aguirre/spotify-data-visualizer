@@ -32,7 +32,7 @@ const Dashboard = () => {
   const buildShareURL = useCallback(() => {
     return window?.location?.href.replace(
       pathname,
-      `/user/compare/${userData.userID}`
+      `/user/affinity/${userData.userID}`
     )
   }, [userData.userID, pathname])
 

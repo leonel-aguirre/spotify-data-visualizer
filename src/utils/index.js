@@ -15,3 +15,13 @@ export const copyTextToClipboard = async (text) => {
 export const hasAtLeastOneTop = (tops) => {
   return Object.keys(tops).some((key) => tops[key])
 }
+
+export const snakeToTitleCase = (snakeCaseString) => {
+  const words = snakeCaseString.split("_")
+  const titleCaseWords = words.map(
+    (word) => word.charAt(0).toUpperCase() + word.slice(1)
+  )
+  const titleCaseString = titleCaseWords.join(" ")
+
+  return titleCaseString
+}
