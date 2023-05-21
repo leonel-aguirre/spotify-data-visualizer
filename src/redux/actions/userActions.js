@@ -24,7 +24,7 @@ export const fetchUserData = () => async (dispatch) => {
       },
     })
   } catch (error) {
-    // TODO: Handle error.
+    throw new Error("Unable to retrieve data.")
   }
 }
 
