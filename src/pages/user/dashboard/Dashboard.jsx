@@ -3,7 +3,6 @@ import "./Dashboard.scss"
 import React, { useCallback, useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import Head from "next/head"
-import { useRouter } from "next/router"
 import { faMusic, faPalette, faStar } from "@fortawesome/free-solid-svg-icons"
 
 import DropdownBox from "@/components/DropdownBox/DropdownBox"
@@ -20,7 +19,6 @@ const Dashboard = () => {
   const userData = useSelector(selectUser)
   const topsStatus = useSelector(selectTopsStatus)
   const { user } = useAuth()
-  const { pathname } = useRouter()
 
   useEffect(() => {
     if (user && userData.userID) {
@@ -30,11 +28,8 @@ const Dashboard = () => {
   }, [user, userData.userID])
 
   const buildShareURL = useCallback(() => {
-    return window?.location?.href.replace(
-      pathname,
-      `/user/affinity/${userData.userID}`
-    )
-  }, [userData.userID, pathname])
+    return window?.location?.origin + `/user/affinity/${userData.userID}`
+  }, [userData.userID])
 
   return (
     <div className="dashboard">
