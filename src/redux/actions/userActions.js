@@ -108,3 +108,18 @@ export const createTop =
       // TODO: Handle error.
     }
   }
+
+export const fetchFriendAffinityData =
+  (user, userID, userFriendID) => async (_dispatch) => {
+    try {
+      const { data } = await get("/compare-users", {
+        token: await user.getIdToken(),
+        userID,
+        userFriendID,
+      })
+
+      return data.data
+    } catch (error) {
+      // TODO: Handle error.
+    }
+  }
