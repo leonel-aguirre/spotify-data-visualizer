@@ -1,4 +1,4 @@
-import { push, ref } from "firebase/database"
+import { push, ref, update } from "firebase/database"
 
 import { getAffinityPercentage } from "./utils"
 import { auth, database } from "@/firebase-server"
@@ -34,6 +34,39 @@ const possibleTops = [
   },
 ]
 
+const updateUserFriends = async (userID, friendID) => {
+  await database
+    .ref("friendsByUser")
+    .orderByChild("userID")
+    .equalTo(userID)
+    .once("value", async (snapshot) => {
+      const data = snapshot.val()
+
+      if (data) {
+        const entryID = Object.keys(data)[0]
+
+        const isFriendAlreadyAdded = data[entryID]?.friends?.includes(friendID)
+
+        if (!isFriendAlreadyAdded) {
+          if (!!data[entryID]?.friends) {
+            await update(ref(database, `friendsByUser/${entryID}/friends`), {
+              ...[...data[entryID]?.friends, friendID],
+            })
+          } else {
+            await update(ref(database, `friendsByUser/${entryID}/friends`), {
+              ...[friendID],
+            })
+          }
+        }
+      } else {
+        await push(ref(database, `friendsByUser`), {
+          userID: userID,
+          friends: [friendID],
+        })
+      }
+    })
+}
+
 const handler = async (req, res) => {
   if (req.method === "GET") {
     const { token, userID, userFriendID } = req.query
@@ -42,55 +75,68 @@ const handler = async (req, res) => {
     let userTops
     let refinedData
 
-    await database
-      .ref("topsByUser")
-      .orderByChild("userID")
-      .equalTo(userFriendID)
-      .once("value", async (snapshot) => {
-        const data = snapshot.val()
+    try {
+      await auth.verifyIdToken(token)
 
-        if (data) {
-          const entryID = Object.keys(data)[0]
+      await database
+        .ref("topsByUser")
+        .orderByChild("userID")
+        .equalTo(userFriendID)
+        .once("value", async (snapshot) => {
+          const data = snapshot.val()
 
-          friendTops = data[entryID]
+          if (data) {
+            const entryID = Object.keys(data)[0]
+
+            friendTops = data[entryID]
+          } else {
+            res
+              .status(400)
+              .json({ success: false, message: "userFriendID not found." })
+          }
+        })
+
+      await database
+        .ref("topsByUser")
+        .orderByChild("userID")
+        .equalTo(userID)
+        .once("value", async (snapshot) => {
+          const data = snapshot.val()
+
+          if (data) {
+            const entryID = Object.keys(data)[0]
+
+            userTops = data[entryID]
+          } else {
+            res
+              .status(400)
+              .json({ success: false, message: "userID not found." })
+          }
+        })
+
+      await updateUserFriends(userID, userFriendID)
+      await updateUserFriends(userFriendID, userID)
+
+      refinedData = possibleTops.map((top) => {
+        if (
+          !!friendTops?.[top.type]?.[top.range] &&
+          !!userTops?.[top.type]?.[top.range]
+        ) {
+          let topAData = userTops?.[top.type]?.[top.range]
+          let topBData = friendTops?.[top.type]?.[top.range]
+
+          return { ...top, affinity: getAffinityPercentage(topAData, topBData) }
         } else {
-          res
-            .status(400)
-            .json({ success: false, message: "userFriendID not found." })
+          return { ...top, affinity: null }
         }
       })
 
-    await database
-      .ref("topsByUser")
-      .orderByChild("userID")
-      .equalTo(userID)
-      .once("value", async (snapshot) => {
-        const data = snapshot.val()
-
-        if (data) {
-          const entryID = Object.keys(data)[0]
-
-          userTops = data[entryID]
-        } else {
-          res.status(400).json({ success: false, message: "userID not found." })
-        }
-      })
-
-    refinedData = possibleTops.map((top) => {
-      if (
-        !!friendTops?.[top.type]?.[top.range] &&
-        !!userTops?.[top.type]?.[top.range]
-      ) {
-        let topAData = userTops?.[top.type]?.[top.range]
-        let topBData = friendTops?.[top.type]?.[top.range]
-
-        return { ...top, affinity: getAffinityPercentage(topAData, topBData) }
-      } else {
-        return { ...top, affinity: null }
-      }
-    })
-
-    res.status(200).json({ success: true, data: refinedData })
+      res.status(200).json({ success: true, data: refinedData })
+    } catch (error) {
+      res.status(401).json({ status: "error", message: "Unauthorized." })
+    }
+  } else {
+    res.status(400).json({ status: "error", message: "Wrong method used." })
   }
 }
 
