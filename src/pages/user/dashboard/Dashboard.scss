@@ -1,14 +1,15 @@
 @use "@/sass/index" as *;
 
 .dashboard {
-  $gradient-base-color: $color-azure-blue;
+  $header-gradient-base-color: $color-azure-blue;
+  $share-gradient-base-color: $color-amethyst-purple;
 
   &__header {
     padding: $space-2;
     background: linear-gradient(
       to bottom right,
-      darken-3($gradient-base-color),
-      $gradient-base-color
+      darken-3($header-gradient-base-color),
+      $header-gradient-base-color
     );
   }
 
@@ -27,7 +28,44 @@
     }
   }
 
+  &__share-with-a-friend-wrapper {
+    grid-column: span 4;
+    padding: $space-3;
+    background: monochrome-gradient(
+      darken-3($share-gradient-base-color),
+      to right bottom
+    );
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    @include breakpoint-min(bp(small)) {
+      grid-column: span 12;
+    }
+  }
+
+  &__share-with-a-friend-title {
+    @extend %h4-sans;
+
+    text-align: center;
+  }
+
+  &__share-with-a-friend-subtitle {
+    @extend %body-sans;
+
+    font-weight: $font-weight-medium;
+    text-align: center;
+  }
+
+  &__url-clipboard-copy {
+    margin-top: $space-3;
+  }
+
   &__dropdown-box {
-    grid-column: span 12;
+    grid-column: span 4;
+
+    @include breakpoint-min(bp(small)) {
+      grid-column: span 12;
+    }
   }
 }

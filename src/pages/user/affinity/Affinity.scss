@@ -1,0 +1,264 @@
+@use "@/sass/index" as *;
+
+.affinity {
+  $header-gradient-base-color: $color-azure-blue;
+  $main-content-background-color: darken-1($color-raisin-black);
+  $image-bubble-border-color: $color-ghost-white;
+  $divider-item-background-color: $color-ghost-white;
+  $divider-border-color: $color-ghost-white;
+  $description-gradient-base-color: $color-amethyst-purple;
+
+  &__header {
+    padding: $space-2;
+    background: linear-gradient(
+      to bottom right,
+      darken-3($header-gradient-base-color),
+      $header-gradient-base-color
+    );
+  }
+
+  &__header-title {
+    @extend %h4-sans;
+  }
+
+  &__main-content {
+    @extend %container;
+
+    display: grid;
+    background-color: $main-content-background-color;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-areas:
+      "info info info info"
+      "user-data user-data user-data user-data"
+      "results results results results"
+      "note note note note";
+    padding-bottom: $space-6;
+
+    @include breakpoint-min(bp(small)) {
+      margin: auto;
+      grid-template-columns: repeat(12, 1fr);
+      grid-template-areas:
+        "info info info info info info info info info info info info"
+        ". . . user-data user-data user-data user-data user-data user-data . . ."
+        ". results results results results results results results results results results ."
+        ". note note note note note note note note note note .";
+    }
+  }
+
+  &__page-description-wrapper {
+    grid-area: info;
+    padding: $space-3;
+    background: monochrome-gradient(
+      darken-3($description-gradient-base-color),
+      to right bottom
+    );
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    @include breakpoint-min(bp(small)) {
+      padding: $space-3 $space-6;
+    }
+  }
+
+  &__page-description-title {
+    @extend %h4-sans;
+
+    text-align: center;
+  }
+
+  &__page-description-subtitle {
+    @extend %body-sans;
+
+    font-weight: $font-weight-medium;
+    text-align: center;
+  }
+
+  &__users-name-and-image-wrapper {
+    grid-area: user-data;
+    display: flex;
+    column-gap: $space-3;
+    padding-bottom: $space-4;
+    margin-top: $space-5;
+    padding: 0 $space-3;
+  }
+
+  &__user-name-and-image {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+  }
+
+  &__user-image-bubble {
+    border-radius: 100%;
+    width: $space-7;
+    border: 3px solid $image-bubble-border-color;
+
+    @include breakpoint-min(bp(small)) {
+      width: $space-7;
+    }
+  }
+
+  &__user-name {
+    @extend %body-sans;
+
+    font-weight: $font-weight-bold;
+    margin-top: $space-2;
+    text-align: center;
+  }
+
+  &__users-data-divider-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    column-gap: $space-1;
+    flex: 1;
+  }
+
+  &__users-data-divider-item {
+    width: $space-1;
+    height: $space-1;
+    background-color: $divider-item-background-color;
+    border-radius: 100%;
+    animation: size-animation-a 1s infinite alternate ease-in-out;
+
+    @include breakpoint-min(bp(small)) {
+      animation: size-animation-b 1s infinite alternate ease-in-out;
+      width: $space-2;
+      height: $space-2;
+    }
+
+    &:nth-child(2n) {
+      animation-direction: alternate-reverse;
+    }
+
+    @keyframes size-animation-a {
+      from {
+        width: $space-1;
+        height: $space-1;
+      }
+
+      to {
+        width: $space-2;
+        height: $space-2;
+      }
+    }
+
+    @keyframes size-animation-b {
+      from {
+        width: $space-2;
+        height: $space-2;
+      }
+
+      to {
+        width: $space-3;
+        height: $space-3;
+      }
+    }
+  }
+
+  &__affinity-data-wrapper {
+    grid-area: results;
+    margin-top: $space-6;
+    display: flex;
+    flex-direction: column;
+    row-gap: $space-6;
+    padding: 0 $space-3;
+
+    @include breakpoint-min(bp(small)) {
+      padding: $space-3 0;
+      flex-direction: row;
+      column-gap: $space-4;
+    }
+  }
+
+  &__tops-group {
+    &--is-artist-type {
+      flex: 2;
+    }
+
+    &--is-track-type {
+      flex: 2;
+    }
+
+    &--is-genre-type {
+      flex: 1;
+    }
+  }
+
+  &__tops-group-title {
+    @extend %h4-sans;
+
+    border-bottom: 5px solid $color-ghost-white;
+  }
+
+  &__tops-percentages-wrapper {
+    display: flex;
+    margin-top: $space-3;
+    justify-content: space-around;
+  }
+
+  &__top-item-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  &__top-percentage-bubble {
+    @extend %body-sans;
+
+    font-weight: $font-weight-black;
+    width: $space-6;
+    height: $space-6;
+    color: $color-raisin-black;
+    border-radius: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: $color-ghost-white;
+
+    &--is-default {
+      background-color: $color-ghost-white;
+    }
+
+    &--is-danger {
+      background-color: $color-folly-red;
+    }
+
+    &--is-warning {
+      background-color: $color-arylide-yellow;
+    }
+
+    &--is-success {
+      background-color: $color-spring-green;
+    }
+  }
+
+  &__range-text {
+    @extend %body-small-sans;
+
+    font-weight: $font-weight-bold;
+    margin-top: $space-1;
+  }
+
+  &__note-section {
+    grid-area: note;
+    margin-top: $space-6;
+    padding: 0 $space-3;
+
+    @include breakpoint-min(bp(small)) {
+      padding: 0;
+    }
+  }
+
+  &__note {
+    @extend %body-small-sans;
+
+    text-align: justify;
+  }
+
+  &__note-label {
+    font-weight: $font-weight-black;
+  }
+}

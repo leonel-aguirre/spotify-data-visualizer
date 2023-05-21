@@ -1,0 +1,138 @@
+@use "@/sass/index" as *;
+
+.clipboard-copy {
+  $text-container-background-color: $color-raisin-black;
+  $text-container-color: lighten-3($color-raisin-black);
+
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+
+  @include breakpoint-min(bp(small)) {
+    flex-direction: row;
+    width: initial;
+  }
+
+  &__text-container {
+    @extend %body-small-sans;
+
+    padding: $space-2;
+    border-radius: 10px 10px 0 0;
+    color: $text-container-color;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    text-align: center;
+    background-color: $text-container-background-color;
+
+    @include breakpoint-min(bp(small)) {
+      border-radius: 10px 0 0 10px;
+    }
+
+    .is-danger & {
+      $border-color: $color-folly-red;
+
+      border: 2px solid $border-color;
+    }
+
+    .is-default & {
+      $border-color: $color-azure-blue;
+
+      border: 2px solid $border-color;
+    }
+
+    .is-success & {
+      $border-color: $color-spring-green;
+
+      border: 2px solid $border-color;
+    }
+
+    .is-warning & {
+      $border-color: $color-arylide-yellow;
+
+      border: 2px solid $border-color;
+    }
+  }
+
+  &__button {
+    @extend %body-small-sans;
+
+    cursor: pointer;
+    padding: $space-1;
+    font-weight: $font-weight-bold;
+    transition: box-shadow 0.5s, color 0.5s;
+    border-radius: 0 0 10px 10px;
+    border: 2px solid transparent;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    @include breakpoint-min(bp(small)) {
+      border-radius: 0 10px 10px 0;
+      padding: $space-2;
+    }
+
+    .is-danger & {
+      $red-gradient: monochrome-gradient($color-folly-red, 45deg);
+
+      background: $red-gradient padding-box, $red-gradient border-box;
+
+      &:hover {
+        box-shadow: 0 0 20px $color-folly-red;
+      }
+
+      &:active {
+        box-shadow: 0 0 40px $color-folly-red;
+      }
+    }
+
+    .is-default & {
+      $blue-gradient: monochrome-gradient($color-azure-blue, 45deg);
+
+      background: $blue-gradient padding-box, $blue-gradient border-box;
+
+      &:hover {
+        box-shadow: 0 0 20px $color-azure-blue;
+      }
+
+      &:active {
+        box-shadow: 0 0 40px $color-azure-blue;
+      }
+    }
+
+    .is-success & {
+      $green-gradient: monochrome-gradient($color-spring-green, 45deg);
+
+      color: $color-raisin-black;
+      background: $green-gradient padding-box, $green-gradient border-box;
+
+      &:hover {
+        box-shadow: 0 0 20px $color-spring-green;
+      }
+
+      &:active {
+        box-shadow: 0 0 40px $color-spring-green;
+      }
+    }
+
+    .is-warning & {
+      $yellow-gradient: monochrome-gradient($color-arylide-yellow, 45deg);
+
+      color: $color-raisin-black;
+      background: $yellow-gradient padding-box, $yellow-gradient border-box;
+
+      &:hover {
+        box-shadow: 0 0 20px $color-arylide-yellow;
+      }
+
+      &:active {
+        box-shadow: 0 0 40px $color-arylide-yellow;
+      }
+    }
+  }
+
+  &__icon {
+    margin-left: $space-1;
+    font-size: $space-2;
+  }
+}

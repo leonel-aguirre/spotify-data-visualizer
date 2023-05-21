@@ -1,22 +1,26 @@
 import "./Dashboard.scss"
 
-import React, { useEffect } from "react"
+import React, { useCallback, useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import Head from "next/head"
+import { useRouter } from "next/router"
 import { faMusic, faPalette, faStar } from "@fortawesome/free-solid-svg-icons"
 
-import { fetchStoredUserTopsStatus } from "@/redux/actions/userActions"
 import DropdownBox from "@/components/DropdownBox/DropdownBox"
 import UserTopInformation from "@/components/UserTopInformation/UserTopInformation"
+import ClipboardCopy from "@/components/ClipboardCopy/ClipboardCopy"
 import { useAuth } from "@/context/auth"
+import { fetchStoredUserTopsStatus } from "@/redux/actions/userActions"
 import { checkUserExist } from "@/redux/actions/authenticationActions"
 import { selectTopsStatus, selectUser } from "@/redux/reducers/userReducer"
+import { hasAtLeastOneTop } from "@/utils"
 
 const Dashboard = () => {
   const dispatch = useDispatch()
   const userData = useSelector(selectUser)
   const topsStatus = useSelector(selectTopsStatus)
   const { user } = useAuth()
+  const { pathname } = useRouter()
 
   useEffect(() => {
     if (user && userData.userID) {
@@ -24,6 +28,13 @@ const Dashboard = () => {
       dispatch(fetchStoredUserTopsStatus(user, userData.userID))
     }
   }, [user, userData.userID])
+
+  const buildShareURL = useCallback(() => {
+    return window?.location?.href.replace(
+      pathname,
+      `/user/affinity/${userData.userID}`
+    )
+  }, [userData.userID, pathname])
 
   return (
     <div className="dashboard">
@@ -35,6 +46,21 @@ const Dashboard = () => {
         <h1 className="dashboard__header-title">Dashboard</h1>
       </header>
       <main className="dashboard__main-content">
+        {hasAtLeastOneTop(topsStatus) && (
+          <div className="dashboard__share-with-a-friend-wrapper">
+            <h4 className="dashboard__share-with-a-friend-title">
+              Share Your Musical Journey with Others!
+            </h4>
+            <p className="dashboard__share-with-a-friend-subtitle">
+              Give this URL to a friend and explore your musical connection!
+            </p>
+            <ClipboardCopy
+              className="dashboard__url-clipboard-copy"
+              text={buildShareURL()}
+              type={ClipboardCopy.SUCCESS}
+            />
+          </div>
+        )}
         <DropdownBox
           defaultOpenState={false}
           className="dashboard__dropdown-box"

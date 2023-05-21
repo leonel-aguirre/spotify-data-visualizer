@@ -25,7 +25,7 @@ export const defaultState = {
     trackShortTerm: false,
     trackMidTerm: false,
     trackLongTerm: false,
-    genreFullActivity: true,
+    genreFullActivity: false,
   },
 }
 

@@ -84,6 +84,7 @@ export const createTop =
           type === "artists"
             ? SET_TOP_ARTISTS_LONG_TERM_STATUS
             : SET_TOP_TRACKS_LONG_TERM_STATUS
+        break
       case "full_activity":
         actionType = SET_TOP_GENRES_FULL_ACTIVITY
         break
@@ -103,6 +104,21 @@ export const createTop =
           data: true,
         },
       })
+    } catch (error) {
+      // TODO: Handle error.
+    }
+  }
+
+export const fetchFriendAffinityData =
+  (user, userID, userFriendID) => async (_dispatch) => {
+    try {
+      const { data } = await get("/compare-users", {
+        token: await user.getIdToken(),
+        userID,
+        userFriendID,
+      })
+
+      return data.data
     } catch (error) {
       // TODO: Handle error.
     }
