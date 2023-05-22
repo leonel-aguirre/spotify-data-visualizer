@@ -11,6 +11,7 @@ import { useAuth } from "@/context/auth"
 import { selectUser } from "@/redux/reducers/userReducer"
 import { fetchUserTop } from "@/redux/actions/userActions"
 import PieChart from "@/components/PieChart/PieChart"
+import Loader from "@/components/Loader/Loader"
 
 const formatTimeRange = (timeRange) => {
   switch (timeRange) {
@@ -72,6 +73,7 @@ const Top = () => {
   const userData = useSelector(selectUser)
   const { user } = useAuth()
   const [topData, setTopData] = useState([])
+  const [isLoading, setIsLoading] = useState(true)
 
   const {
     query: { type, timeRange },
@@ -80,20 +82,18 @@ const Top = () => {
 
   const shouldRenderChart = type === "genres" && timeRange === "full_activity"
 
-  // useEffect(() => {
-  //   if (!type && !timeRange) {
-  //     replace("/user/dashboard")
-  //   }
-  // }, [type, timeRange])
-
   useEffect(() => {
     const fetchData = async () => {
+      setIsLoading(true)
+
       const data = await dispatch(
         fetchUserTop(user, userData.userID, type, timeRange)
       )
 
       if (data) {
         setTopData(data)
+
+        setIsLoading(false)
       } else {
         replace("/user/dashboard")
       }
@@ -140,6 +140,29 @@ const Top = () => {
     return <>{topData?.map((item) => renderDataItem(item))}</>
   }
 
+  const renderMainContent = () => {
+    if (isLoading) {
+      return <Loader className="top__loader" size={Loader.LARGE} />
+    } else {
+      return (
+        <main className="top__main-content">
+          <div className="top__description-container">
+            <h2 className="top__description-title">
+              {`Your ${formatTimeRange(timeRange)} Top ${formatType(type)}`}
+            </h2>
+            {!shouldRenderChart && (
+              <p className="top__description-subtitle">{`(Last ${getTimeText(
+                timeRange
+              )})`}</p>
+            )}
+          </div>
+
+          <div className="top__results-container">{renderResults()}</div>
+        </main>
+      )
+    }
+  }
+
   return (
     <div className="top">
       <Head>
@@ -154,20 +177,7 @@ const Top = () => {
           Top {">"} {formatType(type)} {">"} {formatTimeRange(timeRange)}
         </h1>
       </header>
-      <main className="top__main-content">
-        <div className="top__description-container">
-          <h2 className="top__description-title">
-            {`Your ${formatTimeRange(timeRange)} Top ${formatType(type)}`}
-          </h2>
-          {!shouldRenderChart && (
-            <p className="top__description-subtitle">{`(Last ${getTimeText(
-              timeRange
-            )})`}</p>
-          )}
-        </div>
-
-        <div className="top__results-container">{renderResults()}</div>
-      </main>
+      {renderMainContent()}
     </div>
   )
 }

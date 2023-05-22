@@ -3,6 +3,10 @@
 .loader {
   $icon-color: $color-ghost-white;
 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
   &--is-small {
     font-size: $space-2;
   }

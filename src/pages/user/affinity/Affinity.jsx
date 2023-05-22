@@ -12,11 +12,14 @@ import { useAuth } from "@/context/auth"
 import { selectUser } from "@/redux/reducers/userReducer"
 import { fetchFriendAffinityData } from "@/redux/actions/userActions"
 import { snakeToTitleCase } from "@/utils"
+import Loader from "@/components/Loader/Loader"
 
 const Compare = () => {
   const dispatch = useDispatch()
   const userData = useSelector(selectUser)
   const [affinityData, setAffinityData] = useState(null)
+  const [isLoading, setIsLoading] = useState(true)
+
   const shouldRenderNoteSection = affinityData?.topsAffinities?.some(
     ({ affinity }) => affinity === null
   )
@@ -30,10 +33,14 @@ const Compare = () => {
   // Fetches user affinity data based on URL username.
   useEffect(() => {
     const fetchAffinityData = async () => {
+      setIsLoading(true)
+
       const fetchedData = await dispatch(
         fetchFriendAffinityData(user, userData.userID, userFriendID)
       )
+
       setAffinityData(fetchedData)
+      setIsLoading(false)
     }
 
     if (user && userData.userID && userFriendID) {
@@ -129,6 +136,63 @@ const Compare = () => {
     }
   }
 
+  const renderMainContent = () => {
+    if (isLoading) {
+      return <Loader className="affinity__loader" size={Loader.LARGE} />
+    } else {
+      return (
+        <main className="affinity__main-content">
+          <section className="affinity__page-description-wrapper">
+            <h4 className="affinity__page-description-title">
+              Discover Your Musical Affinity
+            </h4>
+            <p className="affinity__page-description-subtitle">
+              Let the melodies guide your friendship, and enjoy discovering your
+              musical affinity on this Friendship Affinity Page!
+            </p>
+          </section>
+          <section className="affinity__users-name-and-image-wrapper">
+            <div className="affinity__user-name-and-image">
+              {renderDisplayImage(userData?.userImageURL, userData?.userName)}
+              <p className="affinity__user-name">{userData?.userName}</p>
+            </div>
+            <div className="affinity__users-data-divider-wrapper">
+              <div className="affinity__users-data-divider-item" />
+              <div className="affinity__users-data-divider-item" />
+              <div className="affinity__users-data-divider-item" />
+            </div>
+            <div className="affinity__user-name-and-image">
+              {renderDisplayImage(
+                affinityData?.friendImageURL,
+                affinityData?.friendUserName
+              )}
+              <p className="affinity__user-name">
+                {affinityData?.friendUserName}
+              </p>
+            </div>
+          </section>
+          <section className="affinity__affinity-data-wrapper">
+            {renderAffinityData(affinityData?.topsAffinities)}
+          </section>
+          {shouldRenderNoteSection && (
+            <section className="affinity__note-section">
+              <p className="affinity__note">
+                <span className="affinity__note-label">NOTE: </span>
+                It seems that either you or your friend are missing some top
+                picks in certain categories. These missing entries are marked
+                with a sad face ({<FontAwesomeIcon icon={faFaceFrown} />}).
+                {` But don't worry! You can easily create and update these missing 
+          tops to get a more accurate measure of your musical affinity. Simply 
+          create them from your dashboard and return to this page later to see 
+          the updated affinity percentage.`}
+              </p>
+            </section>
+          )}
+        </main>
+      )
+    }
+  }
+
   return (
     <div className="affinity">
       <Head>
@@ -138,54 +202,7 @@ const Compare = () => {
       <header className="affinity__header">
         <h1 className="affinity__header-title">Friendship Affinity</h1>
       </header>
-      <main className="affinity__main-content">
-        <section className="affinity__page-description-wrapper">
-          <h4 className="affinity__page-description-title">
-            Discover Your Musical Affinity
-          </h4>
-          <p className="affinity__page-description-subtitle">
-            Let the melodies guide your friendship, and enjoy discovering your
-            musical affinity on this Friendship Affinity Page!
-          </p>
-        </section>
-        <section className="affinity__users-name-and-image-wrapper">
-          <div className="affinity__user-name-and-image">
-            {renderDisplayImage(userData?.userImageURL, userData?.userName)}
-            <p className="affinity__user-name">{userData?.userName}</p>
-          </div>
-          <div className="affinity__users-data-divider-wrapper">
-            <div className="affinity__users-data-divider-item" />
-            <div className="affinity__users-data-divider-item" />
-            <div className="affinity__users-data-divider-item" />
-          </div>
-          <div className="affinity__user-name-and-image">
-            {renderDisplayImage(
-              affinityData?.friendImageURL,
-              affinityData?.friendUserName
-            )}
-            <p className="affinity__user-name">
-              {affinityData?.friendUserName}
-            </p>
-          </div>
-        </section>
-        <section className="affinity__affinity-data-wrapper">
-          {renderAffinityData(affinityData?.topsAffinities)}
-        </section>
-        {shouldRenderNoteSection && (
-          <section className="affinity__note-section">
-            <p className="affinity__note">
-              <span className="affinity__note-label">NOTE: </span>
-              It seems that either you or your friend are missing some top picks
-              in certain categories. These missing entries are marked with a sad
-              face ({<FontAwesomeIcon icon={faFaceFrown} />}).
-              {` But don't worry! You can easily create and update these missing 
-            tops to get a more accurate measure of your musical affinity. Simply 
-            create them from your dashboard and return to this page later to see 
-            the updated affinity percentage.`}
-            </p>
-          </section>
-        )}
-      </main>
+      {renderMainContent()}
     </div>
   )
 }

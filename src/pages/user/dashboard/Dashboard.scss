@@ -68,4 +68,8 @@
       grid-column: span 12;
     }
   }
+
+  &__loader {
+    margin-top: $space-6;
+  }
 }
