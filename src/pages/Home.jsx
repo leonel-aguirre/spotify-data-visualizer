@@ -1,6 +1,6 @@
 import "./Home.scss"
 
-import React from "react"
+import React, { useState } from "react"
 import { useRouter } from "next/router"
 import { useDispatch } from "react-redux"
 import Head from "next/head"
@@ -11,9 +11,12 @@ import Button from "@/components/Button/Button"
 const Home = () => {
   const dispatch = useDispatch()
   const { push } = useRouter()
+  const [isButtonDisabled, setIsButtonDisabled] = useState()
 
   const loginButtonHandler = async () => {
+    setIsButtonDisabled(true)
     const url = await dispatch(fetchAuthorizationURL())
+    setIsButtonDisabled(false)
 
     if (url) {
       push(url)
@@ -45,6 +48,7 @@ const Home = () => {
             onClick={loginButtonHandler}
             isSmall={true}
             type={Button.SUCCESS}
+            isDisabled={isButtonDisabled}
           >
             Sign In With Your Spotify Account
           </Button>

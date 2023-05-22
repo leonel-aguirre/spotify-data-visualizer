@@ -17,7 +17,7 @@ const handler = async (req, res) => {
 
     const filteredData = {
       userName: user.display_name,
-      userImageURL: user.images[0].url,
+      userImageURL: user.images?.[0]?.url || "",
       userEmail: user.email,
       userID: user.id,
     }

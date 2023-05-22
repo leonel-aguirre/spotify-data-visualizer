@@ -4,11 +4,13 @@ const Button = ({
   children,
   type = Button.DEFAULT,
   isSmall = false,
+  isDisabled = false,
   className = "",
   ...rest
 }) => {
   return (
     <button
+      disabled={isDisabled}
       className={`button is-${type} is-${
         isSmall ? "small" : "large"
       } ${className}`}

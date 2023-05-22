@@ -33,9 +33,6 @@ const handler = async (req, res) => {
 
     const { access_token, expires_in, refresh_token } = data
 
-    // TODO: For testing purposes, remove when unneeded.
-    console.log({ access_token, expires_in, refresh_token })
-
     res.setHeader(
       "Set-Cookie",
       cookie.serialize("token", access_token, {

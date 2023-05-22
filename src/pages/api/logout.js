@@ -1,9 +1,6 @@
 import cookie from "cookie"
 
 const handler = async (req, res) => {
-  // TODO: For testing purposes, remove when unneeded.
-  console.log({ cookiesTest: req.cookies })
-
   res.setHeader(
     "Set-Cookie",
     cookie.serialize("token", "", {

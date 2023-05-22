@@ -113,4 +113,30 @@ $glow-button-background-color: $color-raisin-black;
       box-shadow: 0 0 40px $color-arylide-yellow;
     }
   }
+
+  &:disabled {
+    background: linear-gradient(
+          $glow-button-background-color,
+          $glow-button-background-color
+        )
+        padding-box,
+      $color-ghost-white border-box;
+    opacity: 0.7;
+    cursor: not-allowed;
+
+    &:hover {
+      box-shadow: none;
+      background: linear-gradient(
+            $glow-button-background-color,
+            $glow-button-background-color
+          )
+          padding-box,
+        $color-ghost-white border-box;
+      color: $color-ghost-white;
+    }
+
+    &:active {
+      box-shadow: none;
+    }
+  }
 }
