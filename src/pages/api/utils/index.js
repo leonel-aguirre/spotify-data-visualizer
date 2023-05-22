@@ -55,10 +55,25 @@ export const kebabToTitleCase = (kebabCaseString) => {
 }
 
 export const getAffinityPercentage = (topA, topB) => {
-  const commonElements = topA.filter((item) => topB.includes(item))
+  const SLICE_AMOUNT = 20
+
+  const topAPreprocessed = topA.map((item) => item?.genre || item)
+  const topBPreprocessed = topB.map((item) => item?.genre || item)
+
+  const commonElements = topAPreprocessed.filter((item) =>
+    topBPreprocessed.includes(item)
+  )
 
   const affinityPercentage =
-    commonElements.length / new Set(topA.concat(topB)).size
+    commonElements.length /
+    new Set(
+      topAPreprocessed
+        .slice(0, SLICE_AMOUNT)
+        .concat(topBPreprocessed)
+        .slice(0, SLICE_AMOUNT)
+    ).size
 
-  return Math.round(affinityPercentage * 100) / 100
+  const result = Math.round(affinityPercentage * 100) / 100
+
+  return result > 1 ? 1 : result
 }

@@ -19,7 +19,7 @@ const NavBar = () => {
   const dispatch = useDispatch()
   const [isPopoverOpen, setIsPopoverOpen] = useState(false)
   const userData = useSelector(selectUser)
-  const { replace } = useRouter()
+  const { replace, push } = useRouter()
   const { userName, userImageURL } = userData
 
   useEffect(() => {
@@ -44,15 +44,31 @@ const NavBar = () => {
     replace("/")
   }
 
+  const handleLogoButton = () => {
+    push("/user/dashboard")
+  }
+
+  const renderDisplayImage = () => {
+    if (userImageURL) {
+      return (
+        <img className="nav-bar__bubble-user-image" src={userImageURL} alt="" />
+      )
+    } else {
+      return (
+        <div className="nav-bar__bubble-user-image">{userName.charAt(0)}</div>
+      )
+    }
+  }
+
   return (
     <nav className="nav-bar">
-      <div className="nav-bar__logo-and-title-wrapper">
+      <button className="nav-bar__logo-button" onClick={handleLogoButton}>
         <img
           className="nav-bar__logo"
           src="/static/images/isotype.svg"
           alt="Nav bar Logo"
         />
-      </div>
+      </button>
       <Popover
         isOpen={isPopoverOpen}
         containerClassName="nav-bar__popover"
@@ -80,11 +96,7 @@ const NavBar = () => {
           className="nav-bar__user-bubble-button"
           onClick={() => setIsPopoverOpen(!isPopoverOpen)}
         >
-          <img
-            className="nav-bar__bubble-user-image"
-            src={userImageURL}
-            alt=""
-          />
+          {renderDisplayImage()}
           <span className="nav-bar__bubble-user-name">{userName}</span>
           <FontAwesomeIcon
             className="nav-bar__caret-icon"
