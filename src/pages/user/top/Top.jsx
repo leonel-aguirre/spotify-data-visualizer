@@ -12,6 +12,7 @@ import { selectUser } from "@/redux/reducers/userReducer"
 import { fetchUserTop } from "@/redux/actions/userActions"
 import PieChart from "@/components/PieChart/PieChart"
 import Loader from "@/components/Loader/Loader"
+import Button from "@/components/Button/Button"
 
 const formatTimeRange = (timeRange) => {
   switch (timeRange) {
@@ -169,14 +170,23 @@ const Top = () => {
         <title>Top</title>
       </Head>
 
-      <header className="top__header">
-        <button className="top__back-button" onClick={backButtonHandler}>
+      <section className="top__back-button-section">
+        <Button
+          className="top__back-button"
+          onClick={backButtonHandler}
+          isSmall={true}
+          type={Button.DEFAULT}
+        >
           Back
-        </button>
+        </Button>
+      </section>
+
+      <header className="top__header">
         <h1 className="top__header-title">
           Top {">"} {formatType(type)} {">"} {formatTimeRange(timeRange)}
         </h1>
       </header>
+
       {renderMainContent()}
     </div>
   )

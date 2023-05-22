@@ -13,6 +13,7 @@ import { selectUser } from "@/redux/reducers/userReducer"
 import { fetchFriendAffinityData } from "@/redux/actions/userActions"
 import { snakeToTitleCase } from "@/utils"
 import Loader from "@/components/Loader/Loader"
+import Button from "@/components/Button/Button"
 
 const Compare = () => {
   const dispatch = useDispatch()
@@ -27,6 +28,7 @@ const Compare = () => {
   const {
     query: { userID: userFriendID },
     replace,
+    push,
   } = useRouter()
   const { user } = useAuth()
 
@@ -53,6 +55,10 @@ const Compare = () => {
       }
     }
   }, [user, userData.userID, userFriendID])
+
+  const backButtonHandler = () => {
+    push("/user/dashboard")
+  }
 
   const renderTopPercentages = ({ type, range, affinity }) => {
     const shouldRenderIcon = affinity === null
@@ -199,9 +205,21 @@ const Compare = () => {
         <title>Friendship Affinity</title>
       </Head>
 
+      <section className="affinity__back-button-section">
+        <Button
+          className="affinity__back-button"
+          onClick={backButtonHandler}
+          isSmall={true}
+          type={Button.DEFAULT}
+        >
+          Back
+        </Button>
+      </section>
+
       <header className="affinity__header">
         <h1 className="affinity__header-title">Friendship Affinity</h1>
       </header>
+
       {renderMainContent()}
     </div>
   )

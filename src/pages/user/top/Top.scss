@@ -3,6 +3,7 @@
 .top {
   $gradient-base-color: $color-azure-blue;
   $main-content-background-color: darken-1($color-raisin-black);
+  $back-button-section-background-color: darken-1($color-raisin-black);
   $data-item-white-color: $color-ghost-white;
   $data-item-red-color: lighten-1($color-folly-red);
   $data-item-blue-color: lighten-1($color-azure-blue);
@@ -20,25 +21,14 @@
     display: flex;
   }
 
-  &__back-button {
-    @extend %body-sans;
+  &__back-button-section {
+    display: flex;
+    flex-direction: column;
+    padding: $space-2;
+    background-color: $back-button-section-background-color;
 
-    font-weight: $font-weight-bold;
-    margin-right: $space-3;
-    background: none;
-    border: none;
-    cursor: pointer;
-    border-radius: 10px;
-    padding: 0 $space-2;
-    transition: background-color 0.25s;
-    background-color: darken-3($color-azure-blue);
-
-    &:hover {
-      background-color: ($color-azure-blue);
-    }
-
-    &:active {
-      background-color: lighten-1($color-azure-blue);
+    @include breakpoint-min(bp(small)) {
+      display: none;
     }
   }
 
