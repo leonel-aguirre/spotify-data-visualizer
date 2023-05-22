@@ -72,7 +72,7 @@ const Compare = () => {
           {shouldRenderIcon ? (
             <FontAwesomeIcon icon={faFaceFrown} />
           ) : (
-            `${affinity * 100}%`
+            `${Math.round(affinity * 100)}%`
           )}
         </p>
         <p className="affinity__range-text">{snakeToTitleCase(range)}</p>
@@ -113,6 +113,22 @@ const Compare = () => {
     )
   }
 
+  const renderDisplayImage = (userImageURL, userName) => {
+    if (userImageURL) {
+      return (
+        <img
+          className="affinity__user-image-bubble"
+          src={userImageURL}
+          alt=""
+        />
+      )
+    } else {
+      return (
+        <div className="affinity__user-image-bubble">{userName?.charAt(0)}</div>
+      )
+    }
+  }
+
   return (
     <div className="affinity">
       <Head>
@@ -134,11 +150,7 @@ const Compare = () => {
         </section>
         <section className="affinity__users-name-and-image-wrapper">
           <div className="affinity__user-name-and-image">
-            <img
-              className="affinity__user-image-bubble"
-              src={userData?.userImageURL}
-              alt=""
-            />
+            {renderDisplayImage(userData?.userImageURL, userData?.userName)}
             <p className="affinity__user-name">{userData?.userName}</p>
           </div>
           <div className="affinity__users-data-divider-wrapper">
@@ -147,11 +159,10 @@ const Compare = () => {
             <div className="affinity__users-data-divider-item" />
           </div>
           <div className="affinity__user-name-and-image">
-            <img
-              className="affinity__user-image-bubble"
-              src={affinityData?.friendImageURL}
-              alt=""
-            />
+            {renderDisplayImage(
+              affinityData?.friendImageURL,
+              affinityData?.friendUserName
+            )}
             <p className="affinity__user-name">
               {affinityData?.friendUserName}
             </p>

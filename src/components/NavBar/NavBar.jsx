@@ -44,6 +44,18 @@ const NavBar = () => {
     replace("/")
   }
 
+  const renderDisplayImage = () => {
+    if (userImageURL) {
+      return (
+        <img className="nav-bar__bubble-user-image" src={userImageURL} alt="" />
+      )
+    } else {
+      return (
+        <div className="nav-bar__bubble-user-image">{userName.charAt(0)}</div>
+      )
+    }
+  }
+
   return (
     <nav className="nav-bar">
       <div className="nav-bar__logo-and-title-wrapper">
@@ -80,11 +92,7 @@ const NavBar = () => {
           className="nav-bar__user-bubble-button"
           onClick={() => setIsPopoverOpen(!isPopoverOpen)}
         >
-          <img
-            className="nav-bar__bubble-user-image"
-            src={userImageURL}
-            alt=""
-          />
+          {renderDisplayImage()}
           <span className="nav-bar__bubble-user-name">{userName}</span>
           <FontAwesomeIcon
             className="nav-bar__caret-icon"
