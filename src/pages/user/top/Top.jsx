@@ -4,8 +4,6 @@ import React, { useEffect, useState } from "react"
 import Head from "next/head"
 import { useRouter } from "next/router"
 import { useDispatch, useSelector } from "react-redux"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faChevronLeft } from "@fortawesome/free-solid-svg-icons"
 
 import { useAuth } from "@/context/auth"
 import { selectUser } from "@/redux/reducers/userReducer"

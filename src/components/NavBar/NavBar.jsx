@@ -19,7 +19,7 @@ const NavBar = () => {
   const dispatch = useDispatch()
   const [isPopoverOpen, setIsPopoverOpen] = useState(false)
   const userData = useSelector(selectUser)
-  const { replace } = useRouter()
+  const { replace, push } = useRouter()
   const { userName, userImageURL } = userData
 
   useEffect(() => {
@@ -44,6 +44,10 @@ const NavBar = () => {
     replace("/")
   }
 
+  const handleLogoButton = () => {
+    push("/user/dashboard")
+  }
+
   const renderDisplayImage = () => {
     if (userImageURL) {
       return (
@@ -58,13 +62,13 @@ const NavBar = () => {
 
   return (
     <nav className="nav-bar">
-      <div className="nav-bar__logo-and-title-wrapper">
+      <button className="nav-bar__logo-button" onClick={handleLogoButton}>
         <img
           className="nav-bar__logo"
           src="/static/images/isotype.svg"
           alt="Nav bar Logo"
         />
-      </div>
+      </button>
       <Popover
         isOpen={isPopoverOpen}
         containerClassName="nav-bar__popover"
