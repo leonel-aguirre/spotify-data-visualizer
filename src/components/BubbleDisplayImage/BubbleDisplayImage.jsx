@@ -18,17 +18,17 @@ const BubbleDisplayImage = ({
         hasBorder ? "has-border" : ""
       } is-${size}`}
     >
-      {!hasErrorOccurred ? (
+      {hasErrorOccurred || !userImageURL ? (
+        <div className={`bubble-display-image__user-image-bubble ${className}`}>
+          {userName?.charAt(0)}
+        </div>
+      ) : (
         <img
           className={`bubble-display-image__user-image-bubble ${className}`}
           src={userImageURL}
           onError={() => setHasErrorOccurred(true)}
           alt=""
         />
-      ) : (
-        <div className={`bubble-display-image__user-image-bubble ${className}`}>
-          {userName?.charAt(0)}
-        </div>
       )}
     </div>
   )
