@@ -123,3 +123,16 @@ export const fetchFriendAffinityData =
       // TODO: Handle error.
     }
   }
+
+export const fetchUserFriends = (user, userID) => async (_dispatch) => {
+  try {
+    const { data } = await get("/user-friends", {
+      token: await user.getIdToken(),
+      userID,
+    })
+
+    return data.data
+  } catch (error) {
+    // TODO: Handle error.
+  }
+}
