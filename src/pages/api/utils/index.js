@@ -18,10 +18,16 @@ export const topGenresFromArtistsList = (list) => {
     })
   })
 
+  let filterValue = Math.ceil(
+    Object.keys(genreData).reduce((a, b) => {
+      return a + genreData[b]
+    }, 0) / Object.keys(genreData).length
+  )
+
   Object.keys(genreData).forEach((genreKey) => {
     let genreValue = genreData[genreKey]
 
-    if (genreValue >= 5) {
+    if (genreValue >= filterValue) {
       genreSums[genreKey] = genreValue
       sumTotal += genreValue
     }

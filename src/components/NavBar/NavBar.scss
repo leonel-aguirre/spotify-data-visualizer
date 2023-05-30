@@ -3,14 +3,22 @@
 .nav-bar {
   $popover-background-color: transparentize($color-raisin-black, 0.1);
 
-  display: flex;
-  background-color: darken-3($color-raisin-black);
-  padding: $space-2;
-  justify-content: space-between;
-  align-items: center;
   position: sticky;
   top: 0;
   box-shadow: 0px -12px 20px 15px lighten-1($color-azure-blue);
+  background-color: darken-3($color-raisin-black);
+
+  &__main-content {
+    display: flex;
+    padding: $space-2;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &__left-side-wrapper {
+    display: flex;
+    align-items: center;
+  }
 
   &__logo-button {
     display: flex;
@@ -26,13 +34,50 @@
     height: 40px;
   }
 
-  &__page-title {
-    @extend %body-sans;
+  &__menu-content {
+    display: none;
 
-    font-weight: $font-weight-bold;
-    border-left: 2px solid $color-ghost-white;
-    padding-left: $space-4;
-    margin-left: $space-4;
+    @include breakpoint-min(bp(small)) {
+      display: flex;
+      flex-direction: row;
+    }
+  }
+
+  &__menu-option {
+    list-style: none;
+
+    &:not(:first-child) {
+      margin-left: $space-5;
+
+      ::before {
+        content: "";
+        background-color: $color-ghost-white;
+        height: 20px;
+        width: 3px;
+        position: absolute;
+        transform: translate(-25px, 12px);
+      }
+    }
+  }
+
+  &__menu-option-button {
+    @extend %h4-sans;
+
+    font-weight: $font-weight-regular;
+    width: 100%;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+    background-color: darken-3($color-raisin-black);
+    padding: 0;
+
+    &:hover {
+      color: $color-spring-green;
+    }
+
+    &:active {
+      color: $color-spring-green;
+    }
   }
 
   &__user-bubble-button {
@@ -55,16 +100,7 @@
   }
 
   &__bubble-user-image {
-    width: $space-4;
-    height: $space-4;
-    border-radius: 100%;
     margin-right: $space-3;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: $color-raisin-black;
-    font-weight: $font-weight-extrabold;
-    font-size: $space-2;
   }
 
   &__bubble-user-name {
@@ -112,6 +148,66 @@
 
     &:active {
       box-shadow: 0 0 40px $color-folly-red;
+    }
+  }
+
+  &__mobile-menu {
+    display: unset;
+
+    @include breakpoint-min(bp(small)) {
+      display: none;
+    }
+  }
+
+  &__mobile-menu-button {
+    padding: $space-2;
+    background-color: darken-3($color-raisin-black);
+    width: 100%;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+    display: flex;
+    align-items: center;
+  }
+
+  &__mobile-menu-title {
+    @extend %h4-sans;
+  }
+
+  &__mobile-menu-arrow-icon {
+    margin-left: $space-2;
+    font-size: $space-4;
+  }
+
+  &__mobile-menu-content {
+    padding: 0 $space-2;
+    padding-bottom: $space-2;
+    display: flex;
+    flex-direction: column;
+    row-gap: $space-1;
+  }
+
+  &__mobile-menu-option {
+    list-style: none;
+  }
+
+  &__mobile-menu-option-button {
+    @extend %h4-sans;
+
+    font-weight: $font-weight-regular;
+    width: 100%;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+    background-color: darken-3($color-raisin-black);
+    padding: 0;
+
+    &:hover {
+      color: $color-spring-green;
+    }
+
+    &:active {
+      color: $color-spring-green;
     }
   }
 }

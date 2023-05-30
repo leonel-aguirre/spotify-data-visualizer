@@ -1,3 +1,3 @@
-import Affinity from "./Affinity"
+import UserAffinity from "./UserAffinity"
 
-export default Affinity
+export default UserAffinity
