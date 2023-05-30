@@ -34,7 +34,11 @@ const possibleTops = [
   },
 ]
 
-const updateUserFriends = async (userID, friendID) => {
+const updateUserFriends = async (userID, friendData) => {
+  let refinedFriendData = { ...friendData }
+
+  delete refinedFriendData.userEmail
+
   await database
     .ref("friendsByUser")
     .orderByChild("userID")
@@ -45,23 +49,25 @@ const updateUserFriends = async (userID, friendID) => {
       if (data) {
         const entryID = Object.keys(data)[0]
 
-        const isFriendAlreadyAdded = data[entryID]?.friends?.includes(friendID)
+        const isFriendAlreadyAdded = data[entryID]?.friends?.some(
+          (friend) => friend?.userID === refinedFriendData?.userID
+        )
 
         if (!isFriendAlreadyAdded) {
           if (!!data[entryID]?.friends) {
             await update(ref(database, `friendsByUser/${entryID}/friends`), {
-              ...[...data[entryID]?.friends, friendID],
+              ...[...data[entryID]?.friends, { ...refinedFriendData }],
             })
           } else {
             await update(ref(database, `friendsByUser/${entryID}/friends`), {
-              ...[friendID],
+              ...[{ ...refinedFriendData }],
             })
           }
         }
       } else {
         await push(ref(database, `friendsByUser`), {
           userID: userID,
-          friends: [friendID],
+          friends: [{ ...refinedFriendData }],
         })
       }
     })
@@ -74,8 +80,8 @@ const handler = async (req, res) => {
     let friendTops
     let userTops
     let refinedData
-    let friendImageURL
-    let friendUserName
+    let userData
+    let friendData
 
     try {
       await auth.verifyIdToken(token)
@@ -116,9 +122,6 @@ const handler = async (req, res) => {
           }
         })
 
-      await updateUserFriends(userID, userFriendID)
-      await updateUserFriends(userFriendID, userID)
-
       await database
         .ref("users")
         .orderByChild("userID")
@@ -129,14 +132,34 @@ const handler = async (req, res) => {
           if (data) {
             const entryID = Object.keys(data)[0]
 
-            friendImageURL = data[entryID]?.userImageURL
-            friendUserName = data[entryID]?.userName
+            friendData = data[entryID]
           } else {
             res
               .status(400)
               .json({ success: false, message: "userID is not registered." })
           }
         })
+
+      await database
+        .ref("users")
+        .orderByChild("userID")
+        .equalTo(userID)
+        .once("value", async (snapshot) => {
+          const data = snapshot.val()
+
+          if (data) {
+            const entryID = Object.keys(data)[0]
+
+            userData = data[entryID]
+          } else {
+            res
+              .status(400)
+              .json({ success: false, message: "userID is not registered." })
+          }
+        })
+
+      await updateUserFriends(userID, friendData)
+      await updateUserFriends(userFriendID, userData)
 
       refinedData = possibleTops.map((top) => {
         if (
@@ -154,7 +177,11 @@ const handler = async (req, res) => {
 
       res.status(200).json({
         success: true,
-        data: { topsAffinities: refinedData, friendImageURL, friendUserName },
+        data: {
+          topsAffinities: refinedData,
+          friendImageURL: friendData?.userImageURL,
+          friendUserName: friendData?.userName,
+        },
       })
     } catch (error) {
       res.status(401).json({ status: "error", message: "Unauthorized." })

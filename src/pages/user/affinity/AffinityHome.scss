@@ -1,0 +1,143 @@
+@use "@/sass/index" as *;
+
+.affinity-home {
+  $header-gradient-base-color: $color-azure-blue;
+  $main-content-background-color: darken-1($color-raisin-black);
+  $back-button-section-background-color: darken-1($color-raisin-black);
+  $image-bubble-border-color: $color-ghost-white;
+  $friends-list-base-color: darken-3($color-amethyst-purple);
+  $share-gradient-base-color: $color-amethyst-purple;
+
+  &__header {
+    padding: $space-2;
+    background: linear-gradient(
+      to bottom right,
+      darken-3($header-gradient-base-color),
+      $header-gradient-base-color
+    );
+  }
+
+  &__header-title {
+    @extend %h4-sans;
+  }
+
+  &__mobile-back-button-section {
+    display: flex;
+    flex-direction: column;
+    padding: $space-2;
+    background-color: $back-button-section-background-color;
+
+    @include breakpoint-min(bp(small)) {
+      display: none;
+    }
+  }
+
+  &__main-content {
+    @extend %container;
+
+    display: grid;
+    background-color: $main-content-background-color;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-areas:
+      "share share share share"
+      "list list list list";
+    padding-bottom: $space-5;
+
+    @include breakpoint-min(bp(small)) {
+      margin: auto;
+      grid-template-columns: repeat(12, 1fr);
+      grid-template-areas:
+        "share share share share share share share share share share share share"
+        ". . list list list list list list list list . .";
+    }
+  }
+
+  &__share-with-a-friend-wrapper {
+    grid-area: share;
+    padding: $space-3;
+    background: monochrome-gradient(
+      darken-3($share-gradient-base-color),
+      to right bottom
+    );
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  &__share-with-a-friend-title {
+    @extend %h4-sans;
+
+    text-align: center;
+  }
+
+  &__share-with-a-friend-subtitle {
+    @extend %body-sans;
+
+    font-weight: $font-weight-medium;
+    text-align: center;
+  }
+
+  &__url-clipboard-copy {
+    margin-top: $space-3;
+  }
+
+  &__friends-list-section {
+    grid-area: list;
+    display: flex;
+    flex-direction: column;
+    margin: 0 $space-3;
+    margin-top: $space-5;
+    row-gap: $space-2;
+
+    @include breakpoint-min(bp(small)) {
+      margin-top: $space-5;
+    }
+  }
+
+  &__friends-list-heading {
+    @extend %h4-sans;
+
+    text-align: center;
+  }
+
+  &__friends-list-item {
+    background-color: $friends-list-base-color;
+    display: flex;
+    flex-direction: column;
+    row-gap: $space-1;
+    align-items: center;
+    padding: $space-2;
+    border-radius: 10px;
+
+    @include breakpoint-min(bp(small)) {
+      flex-direction: row;
+    }
+
+    &:nth-child(2n) {
+      background-color: darken-1($friends-list-base-color);
+    }
+  }
+
+  &__user-name {
+    @extend %body-sans;
+
+    font-weight: $font-weight-bold;
+    text-align: center;
+
+    @include breakpoint-min(bp(small)) {
+      margin-left: $space-4;
+    }
+  }
+
+  &__button-wrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+
+    @include breakpoint-min(bp(small)) {
+      width: unset;
+      flex-direction: row;
+      margin-left: auto;
+    }
+  }
+}

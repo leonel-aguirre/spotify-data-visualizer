@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import "./Affinity.scss"
+import "./UserAffinity.scss"
 
 import React, { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
@@ -14,8 +14,9 @@ import { fetchFriendAffinityData } from "@/redux/actions/userActions"
 import { snakeToTitleCase } from "@/utils"
 import Loader from "@/components/Loader/Loader"
 import Button from "@/components/Button/Button"
+import BubbleDisplayImage from "@/components/BubbleDisplayImage/BubbleDisplayImage"
 
-const Compare = () => {
+const UserAffinity = () => {
   const dispatch = useDispatch()
   const userData = useSelector(selectUser)
   const [affinityData, setAffinityData] = useState(null)
@@ -30,6 +31,7 @@ const Compare = () => {
     replace,
     push,
   } = useRouter()
+
   const { user } = useAuth()
 
   // Fetches user affinity data based on URL username.
@@ -77,10 +79,10 @@ const Compare = () => {
     return (
       <div
         key={`top-${type}-${range}`}
-        className="affinity__top-item-container"
+        className="user-affinity__top-item-container"
       >
         <p
-          className={`affinity__top-percentage-bubble affinity__top-percentage-bubble--is-${bubbleColor}`}
+          className={`user-affinity__top-percentage-bubble user-affinity__top-percentage-bubble--is-${bubbleColor}`}
         >
           {shouldRenderIcon ? (
             <FontAwesomeIcon icon={faFaceFrown} />
@@ -88,7 +90,7 @@ const Compare = () => {
             `${Math.round(affinity * 100)}%`
           )}
         </p>
-        <p className="affinity__range-text">{snakeToTitleCase(range)}</p>
+        <p className="user-affinity__range-text">{snakeToTitleCase(range)}</p>
       </div>
     )
   }
@@ -104,21 +106,21 @@ const Compare = () => {
 
     return (
       <>
-        <div className="affinity__tops-group affinity__tops-group--is-artist-type">
-          <h4 className="affinity__tops-group-title">Artists</h4>
-          <div className="affinity__tops-percentages-wrapper">
+        <div className="user-affinity__tops-group user-affinity__tops-group--is-artist-type">
+          <h4 className="user-affinity__tops-group-title">Artists</h4>
+          <div className="user-affinity__tops-percentages-wrapper">
             {artistTypeTops.map((top) => renderTopPercentages(top))}
           </div>
         </div>
-        <div className="affinity__tops-group affinity__tops-group--is-track-type">
-          <h4 className="affinity__tops-group-title">Tracks</h4>
-          <div className="affinity__tops-percentages-wrapper">
+        <div className="user-affinity__tops-group user-affinity__tops-group--is-track-type">
+          <h4 className="user-affinity__tops-group-title">Tracks</h4>
+          <div className="user-affinity__tops-percentages-wrapper">
             {trackTypeTops.map((top) => renderTopPercentages(top))}
           </div>
         </div>
-        <div className="affinity__tops-group affinity__tops-group--is-genre-type">
-          <h4 className="affinity__tops-group-title">Genres</h4>
-          <div className="affinity__tops-percentages-wrapper">
+        <div className="user-affinity__tops-group user-affinity__tops-group--is-genre-type">
+          <h4 className="user-affinity__tops-group-title">Genres</h4>
+          <div className="user-affinity__tops-percentages-wrapper">
             {genreTypeTops.map((top) => renderTopPercentages(top))}
           </div>
         </div>
@@ -126,64 +128,55 @@ const Compare = () => {
     )
   }
 
-  const renderDisplayImage = (userImageURL, userName) => {
-    if (userImageURL) {
-      return (
-        <img
-          className="affinity__user-image-bubble"
-          src={userImageURL}
-          alt=""
-        />
-      )
-    } else {
-      return (
-        <div className="affinity__user-image-bubble">{userName?.charAt(0)}</div>
-      )
-    }
-  }
-
   const renderMainContent = () => {
     if (isLoading) {
-      return <Loader className="affinity__loader" size={Loader.LARGE} />
+      return <Loader className="user-affinity__loader" size={Loader.LARGE} />
     } else {
       return (
-        <main className="affinity__main-content">
-          <section className="affinity__page-description-wrapper">
-            <h4 className="affinity__page-description-title">
+        <main className="user-affinity__main-content">
+          <section className="user-affinity__page-description-wrapper">
+            <h4 className="user-affinity__page-description-title">
               Discover Your Musical Affinity
             </h4>
-            <p className="affinity__page-description-subtitle">
+            <p className="user-affinity__page-description-subtitle">
               Let the melodies guide your friendship, and enjoy discovering your
               musical affinity on this Friendship Affinity Page!
             </p>
           </section>
-          <section className="affinity__users-name-and-image-wrapper">
-            <div className="affinity__user-name-and-image">
-              {renderDisplayImage(userData?.userImageURL, userData?.userName)}
-              <p className="affinity__user-name">{userData?.userName}</p>
+          <section className="user-affinity__users-name-and-image-wrapper">
+            <div className="user-affinity__user-name-and-image">
+              <BubbleDisplayImage
+                userImageURL={userData?.userImageURL}
+                userName={userData?.userName}
+                className="user-affinity__user-image-bubble"
+                size={BubbleDisplayImage.LARGE}
+              />
+              <p className="user-affinity__user-name">{userData?.userName}</p>
             </div>
-            <div className="affinity__users-data-divider-wrapper">
-              <div className="affinity__users-data-divider-item" />
-              <div className="affinity__users-data-divider-item" />
-              <div className="affinity__users-data-divider-item" />
+            <div className="user-affinity__users-data-divider-wrapper">
+              <div className="user-affinity__users-data-divider-item" />
+              <div className="user-affinity__users-data-divider-item" />
+              <div className="user-affinity__users-data-divider-item" />
             </div>
-            <div className="affinity__user-name-and-image">
-              {renderDisplayImage(
-                affinityData?.friendImageURL,
-                affinityData?.friendUserName
-              )}
-              <p className="affinity__user-name">
+            <div className="user-affinity__user-name-and-image">
+              <BubbleDisplayImage
+                userImageURL={affinityData?.friendImageURL}
+                userName={affinityData?.friendUserName}
+                className="user-affinity__user-image-bubble"
+                size={BubbleDisplayImage.LARGE}
+              />
+              <p className="user-affinity__user-name">
                 {affinityData?.friendUserName}
               </p>
             </div>
           </section>
-          <section className="affinity__affinity-data-wrapper">
+          <section className="user-affinity__affinity-data-wrapper">
             {renderAffinityData(affinityData?.topsAffinities)}
           </section>
           {shouldRenderNoteSection && (
-            <section className="affinity__note-section">
-              <p className="affinity__note">
-                <span className="affinity__note-label">NOTE: </span>
+            <section className="user-affinity__note-section">
+              <p className="user-affinity__note">
+                <span className="user-affinity__note-label">NOTE: </span>
                 It seems that either you or your friend are missing some top
                 picks in certain categories. These missing entries are marked
                 with a sad face ({<FontAwesomeIcon icon={faFaceFrown} />}).
@@ -200,14 +193,14 @@ const Compare = () => {
   }
 
   return (
-    <div className="affinity">
+    <div className="user-affinity">
       <Head>
         <title>Friendship Affinity</title>
       </Head>
 
-      <section className="affinity__back-button-section">
+      <section className="user-affinity__back-button-section">
         <Button
-          className="affinity__back-button"
+          className="user-affinity__back-button"
           onClick={backButtonHandler}
           isSmall={true}
           type={Button.DEFAULT}
@@ -216,8 +209,8 @@ const Compare = () => {
         </Button>
       </section>
 
-      <header className="affinity__header">
-        <h1 className="affinity__header-title">Friendship Affinity</h1>
+      <header className="user-affinity__header">
+        <h1 className="user-affinity__header-title">Friendship Affinity</h1>
       </header>
 
       {renderMainContent()}
@@ -225,4 +218,4 @@ const Compare = () => {
   )
 }
 
-export default Compare
+export default UserAffinity
