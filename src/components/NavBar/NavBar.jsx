@@ -14,6 +14,7 @@ import {
   logOut,
   setAfterSignInRedirectURL,
 } from "@/redux/actions/authenticationActions"
+import BubbleDisplayImage from "../BubbleDisplayImage/BubbleDisplayImage"
 
 const NavBar = () => {
   const dispatch = useDispatch()
@@ -46,18 +47,6 @@ const NavBar = () => {
 
   const handleLogoButton = () => {
     push("/user/dashboard")
-  }
-
-  const renderDisplayImage = () => {
-    if (userImageURL) {
-      return (
-        <img className="nav-bar__bubble-user-image" src={userImageURL} alt="" />
-      )
-    } else {
-      return (
-        <div className="nav-bar__bubble-user-image">{userName.charAt(0)}</div>
-      )
-    }
   }
 
   return (
@@ -96,7 +85,13 @@ const NavBar = () => {
           className="nav-bar__user-bubble-button"
           onClick={() => setIsPopoverOpen(!isPopoverOpen)}
         >
-          {renderDisplayImage()}
+          <BubbleDisplayImage
+            className="nav-bar__bubble-user-image"
+            userImageURL={userImageURL}
+            userName={userName}
+            hasBorder={false}
+            size={BubbleDisplayImage.SMALL}
+          />
           <span className="nav-bar__bubble-user-name">{userName}</span>
           <FontAwesomeIcon
             className="nav-bar__caret-icon"

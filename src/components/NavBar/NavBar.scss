@@ -55,16 +55,7 @@
   }
 
   &__bubble-user-image {
-    width: $space-4;
-    height: $space-4;
-    border-radius: 100%;
     margin-right: $space-3;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: $color-raisin-black;
-    font-weight: $font-weight-extrabold;
-    font-size: $space-2;
   }
 
   &__bubble-user-name {

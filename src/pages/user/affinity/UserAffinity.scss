@@ -1,6 +1,6 @@
 @use "@/sass/index" as *;
 
-.affinity {
+.user-affinity {
   $header-gradient-base-color: $color-azure-blue;
   $main-content-background-color: darken-1($color-raisin-black);
   $back-button-section-background-color: darken-1($color-raisin-black);
@@ -100,23 +100,6 @@
     flex-direction: column;
     align-items: center;
     flex: 1;
-  }
-
-  &__user-image-bubble {
-    border-radius: 100%;
-    width: $space-7;
-    height: $space-7;
-    border: 3px solid $image-bubble-border-color;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: $color-raisin-black;
-    font-weight: $font-weight-extrabold;
-    font-size: $space-5;
-
-    @include breakpoint-min(bp(small)) {
-      width: $space-7;
-    }
   }
 
   &__user-name {
