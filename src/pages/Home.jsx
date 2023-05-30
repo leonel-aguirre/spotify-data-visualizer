@@ -26,7 +26,21 @@ const Home = () => {
   return (
     <div className="home">
       <Head>
-        <title>Home</title>
+        <title>Audiograph</title>
+        <meta
+          name="description"
+          content="Visualize Your Music, Hear Your Data"
+          key="desc"
+        />
+        <meta
+          property="og:title"
+          content="Visualize Your Music, Hear Your Data"
+        />
+        <meta
+          property="og:description"
+          content="Visualize Your Music, Hear Your Data"
+        />
+        <meta property="og:image" content="/static/images/logo.svg" />
       </Head>
 
       <div className="home__content-wrapper">
