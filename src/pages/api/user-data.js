@@ -1,7 +1,8 @@
+import { getTokenFromReq } from "./utils"
 import { get } from "@/axios/api"
 
 const handler = async (req, res) => {
-  const { token } = req.cookies
+  const token = getTokenFromReq(req)
 
   const headers = {
     Authorization: "Bearer " + token,
