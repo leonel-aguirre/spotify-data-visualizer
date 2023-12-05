@@ -2,11 +2,15 @@ import { set, ref } from "firebase/database"
 
 import { auth, database } from "@/firebase-server"
 import { get } from "@/axios/api"
-import { filterArtistsFromList, topGenresFromArtistsList } from "./utils"
+import {
+  filterArtistsFromList,
+  getTokenFromReq,
+  topGenresFromArtistsList,
+} from "./utils"
 
 const handler = async (req, res) => {
   if (req.method === "POST") {
-    const { token } = req.cookies
+    const token = getTokenFromReq(req)
     const { token: firebaseToken, userID, type, timeRange } = req.body
 
     const headers = {

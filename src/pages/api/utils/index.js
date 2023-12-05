@@ -83,3 +83,10 @@ export const getAffinityPercentage = (topA, topB) => {
 
   return result > 1 ? 1 : result
 }
+
+export const getTokenFromReq = (req) => {
+  const cookieToken = req?.cookies?.token
+  const headerToken = req?.headers?.authorization?.replace("Bearer ", "")
+
+  return cookieToken || headerToken
+}
